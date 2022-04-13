@@ -6,10 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pokemon-list.component.scss']
 })
 export class PokemonListComponent implements OnInit {
+  allowNewPokemon = false;
+  pokemonAdditionStatus = 'Pas de Pokémon crée';
+  pokemonName = '';
 
   constructor() { }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.allowNewPokemon = true;
+    }, 5000);
+  }
+
+  onAddPokemon() {
+    this.pokemonAdditionStatus = 'Pokémon ajouté !';
   }
 
 }

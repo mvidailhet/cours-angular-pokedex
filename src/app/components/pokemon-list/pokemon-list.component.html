@@ -7,3 +7,21 @@
     <app-pokemon-item></app-pokemon-item>
   </li>
 </ul>
+<div class="py-3">
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Enter a pokemon name"
+    [(ngModel)]="pokemonName"
+  />
+  <button
+    class="btn btn-primary"
+    [disabled]="!allowNewPokemon"
+    (click)="onAddPokemon()"
+    type="button"
+  >
+  Add pokemon
+  </button>
+  <div>{{ pokemonName }}</div>
+  <span class="ml-3">{{ pokemonAdditionStatus }}</span>
+</div>
