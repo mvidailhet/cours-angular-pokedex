@@ -8,6 +8,20 @@
   </li>
 </ul>
 <div class="py-3">
-  <button class="btn btn-primary" [disabled]="!allowNewPokemon" (click)="onAddPokemon()">Add pokemon</button>
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Enter a pokemon name"
+    (input)="onUpdatePokemonName($event)"
+  />
+  <button
+    class="btn btn-primary"
+    [disabled]="!allowNewPokemon"
+    (click)="onAddPokemon()"
+    type="button"
+  >
+  Add pokemon
+  </button>
+  <div>{{ pokemonName }}</div>
   <span class="ml-3">{{ pokemonAdditionStatus }}</span>
 </div>
