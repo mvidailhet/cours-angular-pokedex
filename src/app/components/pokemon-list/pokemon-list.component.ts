@@ -22,10 +22,4 @@ export class PokemonListComponent implements OnInit {
     this.pokemonAdditionStatus = 'Pokémon ajouté !';
   }
 
-  onUpdatePokemonName(event: Event) {
-    console.log(event);
-    const inputElement = event.target as HTMLInputElement;
-    this.pokemonName = inputElement.value;
-  }
-
 }
