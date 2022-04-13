@@ -1,17 +1,11 @@
 <h2 class="my-5">Mes Pokémon</h2>
-<ul class="list-group">
-  <li class="list-group-item">
-    <app-pokemon-item></app-pokemon-item>
-  </li>
-  <li class="list-group-item">
-    <app-pokemon-item></app-pokemon-item>
-  </li>
-</ul>
 <div class="py-3">
+  <label for="pokemonName" class="form-label">Nom du pokémon</label>
   <input
     type="text"
+    id="pokemonName"
     class="form-control mb-3"
-    placeholder="Enter a pokemon name"
+    placeholder="Entrer un nom"
     [(ngModel)]="pokemonName"
   />
   <button
@@ -20,8 +14,17 @@
     (click)="onAddPokemon()"
     type="button"
   >
-  Add pokemon
+  Ajouter un pokémon
   </button>
   <div>{{ pokemonName }}</div>
   <span class="ml-3">{{ pokemonAdditionStatus }}</span>
 </div>
+
+<ul class="list-group">
+  <li class="list-group-item">
+    <app-pokemon-item></app-pokemon-item>
+  </li>
+  <li class="list-group-item">
+    <app-pokemon-item></app-pokemon-item>
+  </li>
+</ul>
