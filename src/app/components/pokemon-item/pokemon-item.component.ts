@@ -11,4 +11,8 @@ export class PokemonItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  generateColor() {
+    return this.level > 50 ? '#00dd00' : '#882222';
+  }
 }
