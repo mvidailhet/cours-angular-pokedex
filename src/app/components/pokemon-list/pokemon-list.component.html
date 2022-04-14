@@ -17,7 +17,12 @@
   Ajouter un pokémon
   </button>
   <div>{{ pokemonName }}</div>
-  <span class="ml-3">{{ pokemonAdditionStatus }}</span>
+  <div *ngIf="pokemonAdded; else noPokemon">
+    Un pokémon a été ajouté ! Son nom est : {{ pokemonName }}
+  </div>
+  <ng-template #noPokemon>
+    Aucun nouveau pokémon n'a été ajouté.
+  </ng-template>
 </div>
 
 <ul class="list-group">

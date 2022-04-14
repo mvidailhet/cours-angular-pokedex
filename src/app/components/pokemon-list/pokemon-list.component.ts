@@ -9,6 +9,7 @@ export class PokemonListComponent implements OnInit {
   allowNewPokemon = false;
   pokemonAdditionStatus = 'Pas de Pokémon crée';
   pokemonName = '';
+  pokemonAdded = false;
 
   constructor() { }
 
@@ -19,7 +20,7 @@ export class PokemonListComponent implements OnInit {
   }
 
   onAddPokemon() {
-    this.pokemonAdditionStatus = 'Pokémon ajouté !';
+    this.pokemonAdded = true;
   }
 
 }
