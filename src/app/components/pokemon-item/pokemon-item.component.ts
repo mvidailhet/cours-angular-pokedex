@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-item',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PokemonItemComponent implements OnInit {
   level = Math.round(Math.random() * 100);
+  @Input() name = '';
 
   constructor() {}
 

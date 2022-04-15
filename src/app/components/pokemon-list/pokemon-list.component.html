@@ -39,9 +39,6 @@
 
 <ul class="list-group">
   <li class="list-group-item">
-    <ng-container *ngFor="let pokemon of pokemons; let pokemonIndex = index">
-      <span>{{ pokemonIndex }}</span>
-      <app-pokemon-item></app-pokemon-item>
-    </ng-container>
+    <app-pokemon-item *ngFor="let pokemon of pokemons" [name]="pokemon"></app-pokemon-item>
   </li>
 </ul>
