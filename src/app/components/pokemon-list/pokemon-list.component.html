@@ -39,6 +39,6 @@
 
 <ul class="list-group">
   <li class="list-group-item">
-    <app-pokemon-item *ngFor="let pokemon of pokemons" [name]="pokemon"></app-pokemon-item>
+    <app-pokemon-item *ngFor="let pokemon of pokemons; let pokemonIndex = index" [pokemonName]="pokemon"></app-pokemon-item>
   </li>
 </ul>
