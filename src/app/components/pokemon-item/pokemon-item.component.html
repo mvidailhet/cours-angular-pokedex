@@ -3,4 +3,10 @@
     class="badge rounded-pill"
     [ngStyle]="{ 'backgroundColor': generateColor() }"
     [ngClass]="{ 'is-red': level <= 50 }"
-  >{{level}}</span></p>
+  > {{level}} </span>
+  <button
+    type="button"
+    class="btn btn-danger"
+    (click)="onRemoveClick()"
+  >Supprimer</button>
+</p>

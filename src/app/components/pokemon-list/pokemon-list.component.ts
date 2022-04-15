@@ -25,4 +25,9 @@ export class PokemonListComponent implements OnInit {
     this.pokemons.push(this.pokemonName);
   }
 
+  removePokemon(pokemonName: string, pokemonIndex: number) {
+    console.log(pokemonName + ' removed');
+    this.pokemons.splice(pokemonIndex, 1);
+  }
+
 }
