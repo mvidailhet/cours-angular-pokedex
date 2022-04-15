@@ -20,9 +20,10 @@ export class PokemonListComponent implements OnInit {
     }, 5000);
   }
 
-  onAddPokemon() {
+  onAddPokemon(element: HTMLElement) {
     this.pokemonAdded = true;
     this.pokemons.push(this.pokemonName);
+    console.log('element :', element);
   }
 
   removePokemon(pokemonName: string, pokemonIndex: number) {
