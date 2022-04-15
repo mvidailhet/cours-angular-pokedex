@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -11,6 +11,7 @@ export class PokemonListComponent implements OnInit {
   pokemonName = '';
   pokemonAdded = false;
   pokemons: string[] = [];
+  @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
 
   constructor() { }
 
@@ -24,6 +25,7 @@ export class PokemonListComponent implements OnInit {
     this.pokemonAdded = true;
     this.pokemons.push(this.pokemonName);
     console.log('element :', element);
+    console.log('this.nameInputElementRef?.nativeElement :',this.nameInputElementRef?.nativeElement);
   }
 
   removePokemon(pokemonName: string, pokemonIndex: number) {
