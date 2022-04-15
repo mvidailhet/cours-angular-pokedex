@@ -10,6 +10,7 @@ export class PokemonListComponent implements OnInit {
   pokemonAdditionStatus = 'Pas de Pokémon crée';
   pokemonName = '';
   pokemonAdded = false;
+  pokemons: string[] = [];
 
   constructor() { }
 
@@ -21,6 +22,7 @@ export class PokemonListComponent implements OnInit {
 
   onAddPokemon() {
     this.pokemonAdded = true;
+    this.pokemons.push(this.pokemonName);
   }
 
 }
