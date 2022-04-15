@@ -1,1 +1,6 @@
-<p>pokemon <span class="badge rounded-pill" [ngStyle]="{'backgroundColor': generateColor()}">{{level}}</span></p>
+<p>pokemon
+  <span
+    class="badge rounded-pill"
+    [ngStyle]="{ 'backgroundColor': generateColor() }"
+    [ngClass]="{ 'is-red': level <= 50 }"
+  >{{level}}</span></p>
