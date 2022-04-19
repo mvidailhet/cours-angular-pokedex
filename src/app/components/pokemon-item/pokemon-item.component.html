@@ -1,12 +1,16 @@
 <div class="card">
   <div class="card-body row">
-    <div class="col"><span>{{ name }}</span></div>
+    <div class="col">
+      <span>{{ name }}</span>
+    </div>
     <div class="col">
       <span
         class="badge rounded-pill"
-        [ngStyle]="{ 'backgroundColor': generateColor() }"
+        [ngStyle]="{ backgroundColor: generateColor() }"
         [ngClass]="{ 'is-red': level <= 50 }"
-      > Niv. {{level}} </span>
+      >
+        Niv. {{ level }}
+      </span>
     </div>
   </div>
   <div class="close-button-container p-3">

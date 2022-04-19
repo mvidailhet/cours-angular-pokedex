@@ -1,18 +1,11 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*",
-    "**/*.spec.ts"
-  ],
+  "ignorePatterns": ["projects/**/*", "**/*.spec.ts", "**/polyfills.ts"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -40,16 +33,15 @@
           }
         ],
         "import/prefer-default-export": "off",
-        "spaced-comment": "off"
+        "spaced-comment": "off",
+        "@typescript-eslint/lines-between-class-members": "off",
+        "object-curly-newline": "off",
+        "@angular-eslint/no-input-rename": "off"
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
   ]

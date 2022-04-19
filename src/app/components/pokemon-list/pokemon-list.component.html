@@ -9,26 +9,17 @@
     [(ngModel)]="pokemonName"
     #nameInput
   />
-  <button
-    class="btn btn-primary"
-    [disabled]="!allowNewPokemon"
-    (click)="onAddPokemon(nameInput)"
-    type="button"
-  >
-  Ajouter un pokémon
+  <button class="btn btn-primary" [disabled]="!allowNewPokemon" (click)="onAddPokemon(nameInput)" type="button">
+    Ajouter un pokémon
   </button>
 </div>
 
 <ng-container [ngSwitch]="pokemons.length">
-  <p *ngSwitchCase="0">
-    Vous n'avez aucun pokémon.
-  </p>
+  <p *ngSwitchCase="0">Vous n'avez aucun pokémon.</p>
   <p *ngSwitchCase="6">
     Vous avez 6 pokemon, votre sac ne peut pas en contenir d'avantage. Les prochains seront envoyé dans le PC.
   </p>
-  <p *ngSwitchDefault>
-    Pokemon : {{ pokemons.length }}
-  </p>
+  <p *ngSwitchDefault>Pokemon : {{ pokemons.length }}</p>
 </ng-container>
 
 <ul class="list-group">
