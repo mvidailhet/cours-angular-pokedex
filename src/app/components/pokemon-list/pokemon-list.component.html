@@ -17,13 +17,6 @@
   >
   Ajouter un pokémon
   </button>
-  <div>{{ pokemonName }}</div>
-  <div *ngIf="pokemonAdded; else noPokemon">
-    Un pokémon a été ajouté ! Son nom est : {{ pokemonName }}
-  </div>
-  <ng-template #noPokemon>
-    Aucun nouveau pokémon n'a été ajouté.
-  </ng-template>
 </div>
 
 <ng-container [ngSwitch]="pokemons.length">

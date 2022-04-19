@@ -1,16 +1,3 @@
 .is-red {
   color: white;
 }
-
-.pokemon-item {
-  color: blue;
-}
-
-// Pour modifier le css d'un composant enfant on utilise les variables CSS
-/* :host {
-  --title-color: green;
-}
-
-.pokemon-item {
-  color: var(--title-color);
-} */
