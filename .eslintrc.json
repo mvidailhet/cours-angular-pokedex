@@ -1,7 +1,8 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*"
+    "projects/**/*",
+    "**/*.spec.ts"
   ],
   "overrides": [
     {
@@ -19,7 +20,7 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:prettier/recommended",
         "airbnb-base",
-        "airbnb-typescript/base"
+        "airbnb-typescript/base",
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -37,7 +38,9 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "import/prefer-default-export": "off",
+        "spaced-comment": "off"
       }
     },
     {
