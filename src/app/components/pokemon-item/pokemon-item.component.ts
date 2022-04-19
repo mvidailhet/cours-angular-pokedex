@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-item',
@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PokemonItemComponent implements OnInit {
   level = Math.round(Math.random() * 100);
+  @Input('pokemonName') name = '';
+  @Output() removeClick = new EventEmitter<string>();
 
   constructor() {}
 
@@ -14,5 +16,9 @@ export class PokemonItemComponent implements OnInit {
 
   generateColor() {
     return this.level > 50 ? '#00dd00' : '#882222';
+  }
+
+  onRemoveClick() {
+    this.removeClick.emit(this.name);
   }
 }

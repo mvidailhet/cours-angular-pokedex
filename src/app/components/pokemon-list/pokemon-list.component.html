@@ -7,22 +7,16 @@
     class="form-control mb-3"
     placeholder="Entrer un nom"
     [(ngModel)]="pokemonName"
+    #nameInput
   />
   <button
     class="btn btn-primary"
     [disabled]="!allowNewPokemon"
-    (click)="onAddPokemon()"
+    (click)="onAddPokemon(nameInput)"
     type="button"
   >
   Ajouter un pokémon
   </button>
-  <div>{{ pokemonName }}</div>
-  <div *ngIf="pokemonAdded; else noPokemon">
-    Un pokémon a été ajouté ! Son nom est : {{ pokemonName }}
-  </div>
-  <ng-template #noPokemon>
-    Aucun nouveau pokémon n'a été ajouté.
-  </ng-template>
 </div>
 
 <ng-container [ngSwitch]="pokemons.length">
@@ -38,10 +32,11 @@
 </ng-container>
 
 <ul class="list-group">
-  <li class="list-group-item">
-    <ng-container *ngFor="let pokemon of pokemons; let pokemonIndex = index">
-      <span>{{ pokemonIndex }}</span>
-      <app-pokemon-item></app-pokemon-item>
-    </ng-container>
+  <li *ngFor="let pokemon of pokemons; let pokemonIndex = index">
+    <app-pokemon-item
+      [pokemonName]="pokemon"
+      (removeClick)="removePokemon(pokemonName, pokemonIndex)"
+      class="my-item"
+    ></app-pokemon-item>
   </li>
 </ul>
