@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
-  styleUrls: ['./pokemon-list.component.scss']
+  styleUrls: ['./pokemon-list.component.scss'],
 })
 export class PokemonListComponent implements OnInit {
   allowNewPokemon = false;
@@ -12,8 +12,6 @@ export class PokemonListComponent implements OnInit {
   pokemonAdded = false;
   pokemons: string[] = ['pok'];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
-
-  constructor() { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -25,12 +23,11 @@ export class PokemonListComponent implements OnInit {
     this.pokemonAdded = true;
     this.pokemons.push(this.pokemonName);
     console.log('element :', element);
-    console.log('this.nameInputElementRef?.nativeElement :',this.nameInputElementRef?.nativeElement);
+    console.log('this.nameInputElementRef?.nativeElement :', this.nameInputElementRef?.nativeElement);
   }
 
   removePokemon(pokemonName: string, pokemonIndex: number) {
-    console.log(pokemonName + ' removed');
+    console.log(`${pokemonName} removed`);
     this.pokemons.splice(pokemonIndex, 1);
   }
-
 }
