@@ -1,0 +1,17 @@
+.is-red {
+  color: white;
+}
+
+.card {
+  margin-bottom: 1rem;
+}
+
+.close-button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
