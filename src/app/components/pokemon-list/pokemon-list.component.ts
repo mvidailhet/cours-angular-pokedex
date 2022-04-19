@@ -28,6 +28,7 @@ export class PokemonListComponent {
     if (this.pokemons.includes(this.pokemonName)) return;
     this.pokemons.push(this.pokemonName);
     this.storePokemonList();
+    this.pokemonName = '';
     console.log('element :', element);
     console.log('this.nameInputElementRef?.nativeElement :', this.nameInputElementRef?.nativeElement);
   }
