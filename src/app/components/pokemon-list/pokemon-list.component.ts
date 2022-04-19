@@ -1,12 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
 })
-export class PokemonListComponent implements OnInit {
-  allowNewPokemon = false;
+export class PokemonListComponent {
+  allowNewPokemon = true;
   pokemonAdditionStatus = 'Pas de Pokémon crée';
   pokemonName = '';
   pokemonAdded = false;
@@ -19,17 +19,12 @@ export class PokemonListComponent implements OnInit {
     this.pokemons = JSON.parse(storagePokemons);
   }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.allowNewPokemon = true;
-    }, 5000);
-  }
-
   storePokemonList() {
     localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
   }
 
   onAddPokemon(element: HTMLElement) {
+    if (!this.pokemonName) return;
     this.pokemonAdded = true;
     this.pokemons.push(this.pokemonName);
     this.storePokemonList();
