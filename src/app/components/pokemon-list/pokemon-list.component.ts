@@ -10,8 +10,14 @@ export class PokemonListComponent implements OnInit {
   pokemonAdditionStatus = 'Pas de Pokémon crée';
   pokemonName = '';
   pokemonAdded = false;
-  pokemons: string[] = ['pok'];
+  pokemons: string[] = [];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
+
+  constructor() {
+    const storagePokemons = localStorage.getItem('pokemons');
+    if (!storagePokemons) return;
+    this.pokemons = JSON.parse(storagePokemons);
+  }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -19,9 +25,14 @@ export class PokemonListComponent implements OnInit {
     }, 5000);
   }
 
+  storePokemonList() {
+    localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
+  }
+
   onAddPokemon(element: HTMLElement) {
     this.pokemonAdded = true;
     this.pokemons.push(this.pokemonName);
+    this.storePokemonList();
     console.log('element :', element);
     console.log('this.nameInputElementRef?.nativeElement :', this.nameInputElementRef?.nativeElement);
   }
@@ -29,5 +40,6 @@ export class PokemonListComponent implements OnInit {
   removePokemon(pokemonName: string, pokemonIndex: number) {
     console.log(`${pokemonName} removed`);
     this.pokemons.splice(pokemonIndex, 1);
+    this.storePokemonList();
   }
 }
