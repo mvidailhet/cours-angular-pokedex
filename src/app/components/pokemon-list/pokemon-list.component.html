@@ -32,9 +32,8 @@
 </ng-container>
 
 <ul class="list-group">
-  <li class="list-group-item">
+  <li *ngFor="let pokemon of pokemons; let pokemonIndex = index">
     <app-pokemon-item
-      *ngFor="let pokemon of pokemons; let pokemonIndex = index"
       [pokemonName]="pokemon"
       (removeClick)="removePokemon(pokemonName, pokemonIndex)"
       class="my-item"

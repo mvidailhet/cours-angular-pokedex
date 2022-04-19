@@ -1,12 +1,15 @@
-<p class="pokemon-item">{{ name }}
-  <span
-    class="badge rounded-pill"
-    [ngStyle]="{ 'backgroundColor': generateColor() }"
-    [ngClass]="{ 'is-red': level <= 50 }"
-  > {{level}} </span>
-  <button
-    type="button"
-    class="btn btn-danger"
-    (click)="onRemoveClick()"
-  >Supprimer</button>
-</p>
+<div class="card">
+  <div class="card-body row">
+    <div class="col"><span>{{ name }}</span></div>
+    <div class="col">
+      <span
+        class="badge rounded-pill"
+        [ngStyle]="{ 'backgroundColor': generateColor() }"
+        [ngClass]="{ 'is-red': level <= 50 }"
+      > Niv. {{level}} </span>
+    </div>
+  </div>
+  <div class="close-button-container p-3">
+    <button (click)="onRemoveClick()" type="button" class="btn-close" aria-label="Close"></button>
+  </div>
+</div>
