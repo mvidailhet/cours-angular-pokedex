@@ -25,7 +25,7 @@ export class PokemonListComponent {
 
   onAddPokemon(element: HTMLElement) {
     if (!this.pokemonName) return;
-    this.pokemonAdded = true;
+    if (this.pokemons.includes(this.pokemonName)) return;
     this.pokemons.push(this.pokemonName);
     this.storePokemonList();
     console.log('element :', element);
