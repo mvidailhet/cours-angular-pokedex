@@ -44,6 +44,7 @@
       *ngFor="let pokemon of pokemons; let pokemonIndex = index"
       [pokemonName]="pokemon"
       (removeClick)="removePokemon(pokemonName, pokemonIndex)"
+      class="my-item"
     ></app-pokemon-item>
   </li>
 </ul>

@@ -10,7 +10,7 @@ export class PokemonListComponent implements OnInit {
   pokemonAdditionStatus = 'Pas de Pokémon crée';
   pokemonName = '';
   pokemonAdded = false;
-  pokemons: string[] = [];
+  pokemons: string[] = ['pok'];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
 
   constructor() { }
