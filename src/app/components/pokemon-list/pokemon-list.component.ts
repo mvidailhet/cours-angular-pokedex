@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class PokemonListComponent {
   pokemons: string[] = [];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
 
-  constructor(private pokemonsService: PokemonsService) {
+  constructor(private pokemonsService: PokemonsService, private router: Router) {
     this.pokemons = this.pokemonsService.pokemons;
   }
 
@@ -22,5 +23,9 @@ export class PokemonListComponent {
     this.pokemonAdded = this.pokemonsService.addPokemon(this.pokemonName);
     if (!this.pokemonAdded) return;
     this.pokemonName = '';
+  }
+
+  goToPokemonPage() {
+    this.router.navigate(['/pokemon']);
   }
 }
