@@ -7,9 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
 import { PokemonItemComponent } from './components/pokemon-item/pokemon-item.component';
+import { HomeComponent } from './pages/home/home.component';
+import { PokemonComponent } from './pages/pokemon/pokemon.component';
 
 @NgModule({
-  declarations: [AppComponent, PokemonListComponent, PokemonItemComponent],
+  // eslint-disable-next-line max-len
+  declarations: [AppComponent, PokemonListComponent, PokemonItemComponent, HomeComponent, PokemonComponent],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
