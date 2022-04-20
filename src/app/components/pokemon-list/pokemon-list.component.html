@@ -9,7 +9,7 @@
     [(ngModel)]="pokemonName"
     #nameInput
   />
-  <button class="btn btn-primary" [disabled]="!allowNewPokemon" (click)="onAddPokemon(nameInput)" type="button">
+  <button class="btn btn-primary" [disabled]="!allowNewPokemon" (click)="onAddPokemon()" type="button">
     Ajouter un pokémon
   </button>
 </div>
@@ -26,7 +26,7 @@
   <li *ngFor="let pokemon of pokemons; let pokemonIndex = index">
     <app-pokemon-item
       [pokemonName]="pokemon"
-      (removeClick)="removePokemon(pokemonName, pokemonIndex)"
+      (removeClick)="removePokemon(pokemon, pokemonIndex)"
       class="my-item"
     ></app-pokemon-item>
   </li>

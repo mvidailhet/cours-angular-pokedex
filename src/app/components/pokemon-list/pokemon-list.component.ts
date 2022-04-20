@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { LoggingService } from 'src/app/services/logging.service';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -13,7 +14,7 @@ export class PokemonListComponent {
   pokemons: string[] = [];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
 
-  constructor() {
+  constructor(private loggingService: LoggingService) {
     const storagePokemons = localStorage.getItem('pokemons');
     if (!storagePokemons) return;
     this.pokemons = JSON.parse(storagePokemons);
@@ -23,19 +24,18 @@ export class PokemonListComponent {
     localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
   }
 
-  onAddPokemon(element: HTMLElement) {
+  onAddPokemon() {
     if (!this.pokemonName) return;
     if (this.pokemons.includes(this.pokemonName)) return;
     this.pokemons.push(this.pokemonName);
     this.storePokemonList();
+    this.loggingService.logItemCreated(this.pokemonName);
     this.pokemonName = '';
-    console.log('element :', element);
-    console.log('this.nameInputElementRef?.nativeElement :', this.nameInputElementRef?.nativeElement);
   }
 
   removePokemon(pokemonName: string, pokemonIndex: number) {
-    console.log(`${pokemonName} removed`);
     this.pokemons.splice(pokemonIndex, 1);
     this.storePokemonList();
+    this.loggingService.logItemRemoved(pokemonName);
   }
 }
