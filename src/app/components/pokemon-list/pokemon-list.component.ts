@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { PokemonsService } from 'src/app/services/pokemons.service';
+import { PokemonsService, Pokemon } from 'src/app/services/pokemons.service';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -12,7 +12,7 @@ export class PokemonListComponent {
   pokemonAdditionStatus = 'Pas de Pokémon crée';
   pokemonName = '';
   pokemonAdded = false;
-  pokemons: string[] = [];
+  pokemons: Pokemon[] = [];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
 
   constructor(private pokemonsService: PokemonsService, private router: Router) {

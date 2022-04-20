@@ -1,15 +1,15 @@
 <div class="card">
   <div class="card-body row">
     <div class="col">
-      <span>{{ name }}</span>
+      <span>{{ pokemon.name }}</span>
     </div>
     <div class="col">
       <span
         class="badge rounded-pill"
         [ngStyle]="{ backgroundColor: generateColor() }"
-        [ngClass]="{ 'is-green': level >= 50 }"
+        [ngClass]="{ 'is-green': pokemon.level >= 50 }"
       >
-        Niv. {{ level }}
+        Niv. {{ pokemon.level }}
       </span>
     </div>
   </div>

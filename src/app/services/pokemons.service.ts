@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { LoggingService } from './logging.service';
 
+export interface Pokemon {
+  name: string;
+  level: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonsService {
-  pokemons: string[] = [];
+  pokemons: Pokemon[] = [];
 
   constructor(private loggingService: LoggingService) {
     this.loadPokemonListFromStorage();
@@ -13,8 +18,11 @@ export class PokemonsService {
 
   addPokemon(pokemonName: string): boolean {
     if (!pokemonName) return false;
-    if (this.pokemons.includes(pokemonName)) return false;
-    this.pokemons.push(pokemonName);
+    if (this.pokemonExists(pokemonName)) return false;
+    this.pokemons.push({
+      name: pokemonName,
+      level: Math.round(Math.random() * 100),
+    });
     this.storePokemonList();
     this.loggingService.logItemCreated(pokemonName);
     return true;
@@ -24,6 +32,11 @@ export class PokemonsService {
     this.pokemons.splice(pokemonIndex, 1);
     this.storePokemonList();
     this.loggingService.logItemRemoved(pokemonName);
+  }
+
+  pokemonExists(pokemonName: string | undefined): boolean {
+    // eslint-disable-next-line max-len
+    return this.pokemons.findIndex((pokemon) => pokemon.name?.toLowerCase() === pokemonName?.toLowerCase()) > -1;
   }
 
   loadPokemonListFromStorage() {
