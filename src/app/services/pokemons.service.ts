@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoggingService } from './logging.service';
 
 export interface Pokemon {
+  id: number;
   name: string;
   level: number;
 }
@@ -20,6 +21,7 @@ export class PokemonsService {
     if (!pokemonName) return false;
     if (this.pokemonExists(pokemonName)) return false;
     this.pokemons.push({
+      id: this.pokemons.length,
       name: pokemonName,
       level: Math.round(Math.random() * 100),
     });
