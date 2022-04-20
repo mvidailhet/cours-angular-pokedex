@@ -25,7 +25,7 @@ export class PokemonListComponent {
     this.pokemonName = '';
   }
 
-  goToPokemonPage() {
-    this.router.navigate(['/pokemon']);
+  goToPokemonPage(pokemonIndex: number) {
+    this.router.navigate([`/pokemon/${pokemonIndex}`]);
   }
 }
