@@ -24,6 +24,11 @@
 
 <ul class="list-group">
   <li *ngFor="let pokemon of pokemons; let pokemonIndex = index">
-    <app-pokemon-item [pokemonName]="pokemon" [pokemonIndex]="pokemonIndex" class="my-item"></app-pokemon-item>
+    <app-pokemon-item
+      routerLink="/pokemon"
+      [pokemonName]="pokemon"
+      [pokemonIndex]="pokemonIndex"
+      class="my-item"
+    ></app-pokemon-item>
   </li>
 </ul>
