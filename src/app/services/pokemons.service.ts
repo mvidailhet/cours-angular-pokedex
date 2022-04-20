@@ -8,9 +8,7 @@ export class PokemonsService {
   pokemons: string[] = [];
 
   constructor(private loggingService: LoggingService) {
-    const storagePokemons = localStorage.getItem('pokemons');
-    if (!storagePokemons) return;
-    this.pokemons = JSON.parse(storagePokemons);
+    this.loadPokemonListFromStorage();
   }
 
   addPokemon(pokemonName: string): boolean {
@@ -26,6 +24,12 @@ export class PokemonsService {
     this.pokemons.splice(pokemonIndex, 1);
     this.storePokemonList();
     this.loggingService.logItemRemoved(pokemonName);
+  }
+
+  loadPokemonListFromStorage() {
+    const storagePokemons = localStorage.getItem('pokemons');
+    if (!storagePokemons) return;
+    this.pokemons = JSON.parse(storagePokemons);
   }
 
   storePokemonList() {
