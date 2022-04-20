@@ -1,33 +1,26 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
   selector: 'app-pokemon-list',
   templateUrl: './pokemon-list.component.html',
   styleUrls: ['./pokemon-list.component.scss'],
 })
-export class PokemonListComponent implements OnInit {
-  allowNewPokemon = false;
+export class PokemonListComponent {
+  allowNewPokemon = true;
   pokemonAdditionStatus = 'Pas de Pokémon crée';
   pokemonName = '';
   pokemonAdded = false;
-  pokemons: string[] = ['pok'];
+  pokemons: string[] = [];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.allowNewPokemon = true;
-    }, 5000);
+  constructor(private pokemonsService: PokemonsService) {
+    this.pokemons = this.pokemonsService.pokemons;
   }
 
-  onAddPokemon(element: HTMLElement) {
-    this.pokemonAdded = true;
-    this.pokemons.push(this.pokemonName);
-    console.log('element :', element);
-    console.log('this.nameInputElementRef?.nativeElement :', this.nameInputElementRef?.nativeElement);
-  }
-
-  removePokemon(pokemonName: string, pokemonIndex: number) {
-    console.log(`${pokemonName} removed`);
-    this.pokemons.splice(pokemonIndex, 1);
+  onAddPokemon() {
+    this.pokemonAdded = this.pokemonsService.addPokemon(this.pokemonName);
+    if (!this.pokemonAdded) return;
+    this.pokemonName = '';
   }
 }

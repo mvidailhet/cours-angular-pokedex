@@ -36,7 +36,8 @@
         "spaced-comment": "off",
         "@typescript-eslint/lines-between-class-members": "off",
         "object-curly-newline": "off",
-        "@angular-eslint/no-input-rename": "off"
+        "@angular-eslint/no-input-rename": "off",
+        "class-methods-use-this": "off"
       }
     },
     {
