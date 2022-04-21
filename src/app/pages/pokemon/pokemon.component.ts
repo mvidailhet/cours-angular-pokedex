@@ -14,11 +14,12 @@ export class PokemonComponent {
 
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnInit(): void {
-    const pokemonId = this.activatedRoute.snapshot.params.id;
+    const pokemonName = this.activatedRoute.snapshot.params.name;
+    const pokemonIndex = this.pokemonService.findPokemonIndexByName(pokemonName);
     this.pokemon = {
-      id: pokemonId,
-      name: this.pokemonService.pokemons[pokemonId].name,
-      level: this.pokemonService.pokemons[pokemonId].level,
+      id: this.pokemonService.pokemons[pokemonIndex].id,
+      name: pokemonName,
+      level: this.pokemonService.pokemons[pokemonIndex].level,
     };
   }
 }

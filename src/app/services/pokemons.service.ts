@@ -41,6 +41,10 @@ export class PokemonsService {
     return this.pokemons.findIndex((pokemon) => pokemon.name?.toLowerCase() === pokemonName?.toLowerCase()) > -1;
   }
 
+  findPokemonIndexByName(name: string) {
+    return this.pokemons.findIndex((pokemon) => pokemon.name === name);
+  }
+
   loadPokemonListFromStorage() {
     const storagePokemons = localStorage.getItem('pokemons');
     if (!storagePokemons) return;
