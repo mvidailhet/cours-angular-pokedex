@@ -43,11 +43,11 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
   goToPreviousPokemon() {
     if (!this.previousPokemonName) return;
-    this.router.navigate(['/pokemon', this.previousPokemonName]);
+    this.router.navigate(['/pokemon', this.previousPokemonName], { queryParams: { allowEdit: 1 }, fragment: 'test' });
   }
 
   goToNextPokemon() {
     if (!this.nextPokemonName) return;
-    this.router.navigate(['/pokemon', this.nextPokemonName]);
+    this.router.navigate(['/pokemon', this.nextPokemonName], { queryParams: { allowEdit: 1 }, fragment: 'test' });
   }
 }
