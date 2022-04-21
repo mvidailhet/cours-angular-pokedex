@@ -45,6 +45,20 @@ export class PokemonsService {
     return this.pokemons.findIndex((pokemon) => pokemon.name === name);
   }
 
+  getPreviousPokemonName(currentPokemonName: string | undefined): string | undefined {
+    if (!currentPokemonName) throw new Error("Can't find Pokemon");
+    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName);
+    if (pokemonIndex === 0) return undefined;
+    return this.pokemons[pokemonIndex - 1].name;
+  }
+
+  getNextPokemonName(currentPokemonName: string | undefined): string | undefined {
+    if (!currentPokemonName) throw new Error("Can't find Pokemon");
+    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName);
+    if (pokemonIndex === this.pokemons.length - 1) return undefined;
+    return this.pokemons[pokemonIndex + 1].name;
+  }
+
   loadPokemonListFromStorage() {
     const storagePokemons = localStorage.getItem('pokemons');
     if (!storagePokemons) return;
