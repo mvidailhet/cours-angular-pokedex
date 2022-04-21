@@ -27,6 +27,11 @@ const routes: Routes = [
         path: 'evolutions',
         component: EvolutionsComponent,
       },
+      {
+        path: '',
+        redirectTo: 'general',
+        pathMatch: 'full',
+      },
     ],
   },
 ];
