@@ -16,7 +16,7 @@ const routes: Routes = [
     component: PokemonComponent,
     children: [
       {
-        path: '',
+        path: 'general',
         component: GeneralComponent,
       },
       {
