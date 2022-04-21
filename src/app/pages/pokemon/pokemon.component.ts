@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Pokemon, PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -7,10 +8,11 @@ import { Pokemon, PokemonsService } from 'src/app/services/pokemons.service';
   templateUrl: './pokemon.component.html',
   styleUrls: ['./pokemon.component.scss'],
 })
-export class PokemonComponent {
+export class PokemonComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined;
   previousPokemonName: string | undefined;
   nextPokemonName: string | undefined;
+  paramsSubscription: Subscription | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -18,9 +20,8 @@ export class PokemonComponent {
     private router: Router,
   ) {}
 
-  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params: Params) => {
+    this.paramsSubscription = this.activatedRoute.params.subscribe((params: Params) => {
       const pokemonName = params.name;
       const pokemonIndex = this.pokemonService.findPokemonIndexByName(pokemonName);
       this.nextPokemonName = this.pokemonService.getNextPokemonName(pokemonName);
@@ -31,6 +32,13 @@ export class PokemonComponent {
         level: this.pokemonService.pokemons[pokemonIndex].level,
       };
     });
+  }
+
+  ngOnDestroy(): void {
+    // Pas besoin de faire ça, Angular s'en occupe pour nous.
+    // Mais pour l'exemple, on montre comment faire
+    // Si cela n'est pas fait, la subscription reste dans la mémoire et crée une fuite mémoire
+    this.paramsSubscription?.unsubscribe();
   }
 
   goToPreviousPokemon() {
