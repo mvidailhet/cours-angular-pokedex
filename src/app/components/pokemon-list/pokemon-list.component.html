@@ -25,7 +25,9 @@
 <ul class="list-group">
   <li *ngFor="let pokemon of pokemons; let pokemonIndex = index">
     <app-pokemon-item
-      (click)="goToPokemonPageWithName(pokemon.name)"
+      [routerLink]="['/pokemon/', pokemon.name]"
+      [queryParams]="{ allowEdit: 1, allowTest: 0 }"
+      fragment="test"
       [pokemon]="pokemon"
       [pokemonIndex]="pokemonIndex"
       class="my-item"
