@@ -9,10 +9,21 @@ import { PokemonListComponent } from './components/pokemon-list/pokemon-list.com
 import { PokemonItemComponent } from './components/pokemon-item/pokemon-item.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PokemonComponent } from './pages/pokemon/pokemon.component';
+import { GeneralComponent } from './pages/pokemon/tabs/general/general.component';
+import { StatsComponent } from './pages/pokemon/tabs/stats/stats.component';
+import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.component';
 
 @NgModule({
-  // eslint-disable-next-line max-len
-  declarations: [AppComponent, PokemonListComponent, PokemonItemComponent, HomeComponent, PokemonComponent],
+  declarations: [
+    AppComponent,
+    PokemonListComponent,
+    PokemonItemComponent,
+    HomeComponent,
+    PokemonComponent,
+    GeneralComponent,
+    StatsComponent,
+    EvolutionsComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
