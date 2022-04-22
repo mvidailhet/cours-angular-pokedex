@@ -12,6 +12,7 @@ export interface Pokemon {
 })
 export class PokemonsService {
   pokemons: Pokemon[] = [];
+  isAddingPokemon = false;
 
   constructor(private loggingService: LoggingService) {
     this.loadPokemonListFromStorage();

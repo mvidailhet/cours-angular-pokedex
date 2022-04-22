@@ -6,6 +6,7 @@
     id="pokemonName"
     class="form-control mb-3"
     placeholder="Entrer un nom"
+    (input)="onPokemonNameType()"
     [(ngModel)]="pokemonName"
     #nameInput
   />

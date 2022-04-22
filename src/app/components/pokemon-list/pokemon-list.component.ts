@@ -19,10 +19,16 @@ export class PokemonListComponent {
     this.pokemons = this.pokemonsService.pokemons;
   }
 
+  onPokemonNameType() {
+    this.pokemonsService.isAddingPokemon = this.pokemonName !== '';
+    console.log('this.pokemonName :', this.pokemonName);
+  }
+
   onAddPokemon() {
     this.pokemonAdded = this.pokemonsService.addPokemon(this.pokemonName);
     if (!this.pokemonAdded) return;
     this.pokemonName = '';
+    this.pokemonsService.isAddingPokemon = false;
   }
 
   goToPokemonPage(pokemonIndex: number) {
