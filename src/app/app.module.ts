@@ -13,6 +13,7 @@ import { GeneralComponent } from './pages/pokemon/tabs/general/general.component
 import { StatsComponent } from './pages/pokemon/tabs/stats/stats.component';
 import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.component';
 import { NotFoundComponent } from './pages/pokemon/not-found/not-found.component';
+import { ErrorComponent } from './pages/pokemon/error/error.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NotFoundComponent } from './pages/pokemon/not-found/not-found.component
     StatsComponent,
     EvolutionsComponent,
     NotFoundComponent,
+    ErrorComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],
