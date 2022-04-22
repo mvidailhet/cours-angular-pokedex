@@ -1,14 +1,4 @@
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container-fluid">
-    <span class="navbar-brand my-3 h1">Ng Pokédex</span>
-    <button type="button" *ngIf="!authService.loggedIn" class="btn btn-primary" (click)="onLogin()">
-      Se connecter
-    </button>
-    <button type="button" *ngIf="authService.loggedIn" class="btn btn-danger" (click)="onLogout()">
-      Se déconnecter
-    </button>
-  </div>
-</nav>
+<app-header></app-header>
 <div class="container">
   <app-pokemon-list></app-pokemon-list>
 </div>

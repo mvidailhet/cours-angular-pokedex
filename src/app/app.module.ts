@@ -14,6 +14,7 @@ import { StatsComponent } from './pages/pokemon/tabs/stats/stats.component';
 import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.component';
 import { NotFoundComponent } from './pages/pokemon/not-found/not-found.component';
 import { ErrorComponent } from './pages/pokemon/error/error.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ErrorComponent } from './pages/pokemon/error/error.component';
     EvolutionsComponent,
     NotFoundComponent,
     ErrorComponent,
+    HeaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],

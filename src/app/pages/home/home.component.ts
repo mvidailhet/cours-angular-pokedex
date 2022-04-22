@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CanComponentDeactivate } from 'src/app/guards/prevent-pokemon-form-leave.guard';
-import { AuthService } from 'src/app/services/auth.service';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -12,19 +11,11 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 export class HomeComponent implements CanComponentDeactivate {
   loggedIn = false;
 
-  constructor(public authService: AuthService, private pokemonService: PokemonsService) {}
+  constructor(private pokemonService: PokemonsService) {}
 
   canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
     if (!this.pokemonService.isAddingPokemon) return true;
     // eslint-disable-next-line no-restricted-globals
     return confirm('Vous voulez vraiment quitter la page sans finir la création du pokémon ?');
-  }
-
-  onLogin() {
-    this.authService.login();
-  }
-
-  onLogout() {
-    this.authService.logout();
   }
 }
