@@ -48,13 +48,13 @@ export class PokemonComponent implements OnInit, OnDestroy {
     };
   };
 
-  handleQueryParams(queryParams: Params) {
+  handleQueryParams = (queryParams: Params) => {
     console.log('query parameters :', queryParams);
-  }
+  };
 
-  handleFragment(fragment: string | null) {
+  handleFragment = (fragment: string | null) => {
     console.log(`fragment : ${fragment}`);
-  }
+  };
 
   goToPreviousPokemon() {
     if (!this.previousPokemonName) return;
