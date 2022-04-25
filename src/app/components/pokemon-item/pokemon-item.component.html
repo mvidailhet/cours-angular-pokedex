@@ -13,6 +13,9 @@
       </span>
     </div>
     <div class="col">
+      <span class="badge badge-secondary pokemon-background-type-{{ keyOfType }}">{{ pokemon.type | titlecase }}</span>
+    </div>
+    <div class="col">
       {{ pokemon.createdAt | date: 'fullDate':'':'fr-FR' | titlecase }}
     </div>
   </div>

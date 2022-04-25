@@ -10,6 +10,11 @@
     [(ngModel)]="pokemonName"
     #nameInput
   />
+  <label for="PokemonType" class="form-label">Type</label>
+  <select class="form-select mb-3" id="PokemonType" #pokemonTextSelect [(ngModel)]="pokemonType">
+    <option [value]="undefined" disabled>Sélectionner un type</option>
+    <option *ngFor="let type of PokemonTypeEnum | keyvalue" [value]="type.value">{{ type.value }}</option>
+  </select>
   <button class="btn btn-primary" [disabled]="!allowNewPokemon" (click)="onAddPokemon()" type="button">
     Ajouter un pokémon
   </button>

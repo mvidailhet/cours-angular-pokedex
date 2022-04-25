@@ -1,9 +1,32 @@
 import { Injectable } from '@angular/core';
 import { LoggingService } from './logging.service';
 
+export enum PokemonTypeEnum {
+  GRASS = 'plante',
+  FIRE = 'feu',
+  WATER = 'eau',
+  POISON = 'poison',
+  NORMAL = 'normal',
+  FIGHTING = 'combat',
+  FLYING = 'vol',
+  GROUND = 'sol',
+  ROCK = 'roche',
+  BUG = 'insecte',
+  GHOST = 'spectre',
+  STEEL = 'acier',
+  ELECTRIC = 'électrique',
+  PSYCHIC = 'psy',
+  ICE = 'glace',
+  DRAGON = 'dragon',
+  DARK = 'ténèbre',
+  FAIRY = 'fée',
+  SHADOW = 'shadow',
+}
+
 export interface Pokemon {
   id: number;
   name: string;
+  type: PokemonTypeEnum;
   level: number;
   createdAt: Date;
 }
@@ -19,12 +42,13 @@ export class PokemonsService {
     this.loadPokemonListFromStorage();
   }
 
-  addPokemon(pokemonName: string): boolean {
-    if (!pokemonName) return false;
+  addPokemon(pokemonName: string, pokemonType: PokemonTypeEnum | undefined): boolean {
+    if (!pokemonName || !pokemonType) return false;
     if (this.pokemonExists(pokemonName)) return false;
     this.pokemons.push({
       id: this.pokemons.length,
       name: pokemonName,
+      type: pokemonType,
       level: Math.round(Math.random() * 100),
       createdAt: new Date(),
     });
