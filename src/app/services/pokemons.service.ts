@@ -5,6 +5,7 @@ export interface Pokemon {
   id: number;
   name: string;
   level: number;
+  createdAt: Date;
 }
 
 @Injectable({
@@ -25,6 +26,7 @@ export class PokemonsService {
       id: this.pokemons.length,
       name: pokemonName,
       level: Math.round(Math.random() * 100),
+      createdAt: new Date(),
     });
     this.storePokemonList();
     this.loggingService.logItemCreated(pokemonName);
