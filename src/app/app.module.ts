@@ -17,6 +17,7 @@ import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.
 import { NotFoundComponent } from './pages/pokemon/not-found/not-found.component';
 import { ErrorComponent } from './pages/pokemon/error/error.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ShortenPipe } from './pipes/shorten.pipe';
 
 registerLocaleData(localeFr);
 
@@ -33,6 +34,7 @@ registerLocaleData(localeFr);
     NotFoundComponent,
     ErrorComponent,
     HeaderComponent,
+    ShortenPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
