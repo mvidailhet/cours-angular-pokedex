@@ -4,9 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'shorten',
 })
 export class ShortenPipe implements PipeTransform {
-  transform(value: string | undefined): unknown {
-    if (value?.length! > 3) {
-      return `${value?.substring(0, 3)}...`;
+  transform(value: string | undefined, nbCharactersToKeep = 3): unknown {
+    if (value?.length! > nbCharactersToKeep) {
+      return `${value?.substring(0, nbCharactersToKeep)}...`;
     }
 
     return value;
