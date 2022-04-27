@@ -9,5 +9,10 @@ import { NgForm } from '@angular/forms';
 export class CreateUserTemplateDrivenComponent {
   onSubmit(userForm: NgForm): void {
     console.log('userForm :', userForm);
+    userForm.reset({
+      userData: {
+        email: 'nice.email@gmail.com',
+      },
+    });
   }
 }
