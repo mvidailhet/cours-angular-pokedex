@@ -24,7 +24,6 @@ export class PokemonListComponent {
 
   onPokemonNameType() {
     this.pokemonsService.isAddingPokemon = this.pokemonName !== '';
-    console.log('this.pokemonName :', this.pokemonName);
   }
 
   onAddPokemon() {
