@@ -3,11 +3,22 @@
   <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
     <div class="form-group mb-3">
       <label for="usernameInput">Nom</label>
-      <input class="form-control" id="usernameInput" type="text" name="username" ngModel required />
+      <input class="form-control" id="usernameInput" type="text" name="username" ngModel required #username="ngModel" />
+      <div class="form-text text-danger" *ngIf="username.touched && username.errors?.required">
+        Veuillez fournir un nom d'utilisateur.
+      </div>
     </div>
     <div class="form-group mb-3">
       <label for="emailInput">Adresse email</label>
-      <input class="form-control" id="emailInput" type="email" name="email" ngModel required email />
+      <input class="form-control" id="emailInput" type="email" name="email" ngModel required email #email="ngModel" />
+      <ng-container *ngIf="email.touched">
+        <div class="form-text text-danger" *ngIf="email.errors?.required">
+          Veuillez fournir une adresse électronique.
+        </div>
+        <div class="form-text text-danger" *ngIf="email.errors?.email">
+          Veuillez fournir une adresse électronique valide.
+        </div>
+      </ng-container>
     </div>
     <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Valider</button>
   </form>
