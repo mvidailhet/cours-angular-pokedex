@@ -19,6 +19,7 @@ import { ErrorComponent } from './pages/pokemon/error/error.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { PokemonTypeFilterPipe } from './pipes/pokemon-type-filter.pipe';
+import { CreateUserModelDrivenComponent } from './pages/create-user-model-driven/create-user-model-driven.component';
 
 registerLocaleData(localeFr);
 
@@ -37,6 +38,7 @@ registerLocaleData(localeFr);
     HeaderComponent,
     ShortenPipe,
     PokemonTypeFilterPipe,
+    CreateUserModelDrivenComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
