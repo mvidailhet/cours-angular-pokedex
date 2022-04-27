@@ -3,11 +3,11 @@
   <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm">
     <div class="form-group mb-3">
       <label for="usernameInput">Nom</label>
-      <input class="form-control" id="usernameInput" type="text" name="username" ngModel />
+      <input class="form-control" id="usernameInput" type="text" name="username" ngModel required />
     </div>
     <div class="form-group mb-3">
       <label for="emailInput">Adresse email</label>
-      <input class="form-control" id="emailInput" type="email" name="email" ngModel />
+      <input class="form-control" id="emailInput" type="email" name="email" ngModel required email />
     </div>
     <button class="btn btn-primary" type="submit">Valider</button>
   </form>
