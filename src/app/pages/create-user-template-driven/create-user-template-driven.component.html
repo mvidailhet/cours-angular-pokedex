@@ -9,6 +9,6 @@
       <label for="emailInput">Adresse email</label>
       <input class="form-control" id="emailInput" type="email" name="email" ngModel required email />
     </div>
-    <button class="btn btn-primary" type="submit">Valider</button>
+    <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Valider</button>
   </form>
 </div>
