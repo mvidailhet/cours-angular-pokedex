@@ -13,6 +13,7 @@ export class PokemonListComponent {
   PokemonTypeEnum = PokemonTypeEnum;
   pokemonName = '';
   pokemonType: PokemonTypeEnum | undefined;
+  pokemonTypeToFilter: PokemonTypeEnum | undefined;
   pokemonAdded = false;
   pokemons: Pokemon[] = [];
   @ViewChild('nameInput') nameInputElementRef: ElementRef | undefined;

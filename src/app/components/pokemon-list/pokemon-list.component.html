@@ -20,6 +20,16 @@
   </button>
 </div>
 
+<div class="py-3">
+  <div class="mb-3">
+    <label for="PokemonTypeFilterPipeSelect" class="form-label">Filtrer par type :</label>
+    <select class="form-select" id="PokemonTypeFilterPipeSelect" [(ngModel)]="pokemonTypeToFilter">
+      <option value="">Sélectionner un type</option>
+      <option *ngFor="let type of PokemonTypeEnum | keyvalue" [value]="type.value">{{ type.value }}</option>
+    </select>
+  </div>
+</div>
+
 <ng-container [ngSwitch]="pokemons.length">
   <p *ngSwitchCase="0">Vous n'avez aucun pokémon.</p>
   <p *ngSwitchCase="6">
@@ -29,7 +39,7 @@
 </ng-container>
 
 <ul class="list-group">
-  <li *ngFor="let pokemon of pokemons; let pokemonIndex = index">
+  <li *ngFor="let pokemon of pokemons | pokemonTypeFilter: pokemonTypeToFilter; let pokemonIndex = index">
     <app-pokemon-item
       [routerLink]="['/pokemon/', pokemon.name]"
       [queryParams]="{ allowEdit: 1, allowTest: 0 }"
