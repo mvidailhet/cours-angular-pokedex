@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-user-model-driven',
@@ -11,8 +11,8 @@ export class CreateUserModelDrivenComponent {
 
   constructor() {
     this.userForm = new FormGroup({
-      username: new FormControl('Mitch'),
-      email: new FormControl(),
+      username: new FormControl('Mitch', Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email]),
     });
   }
 
