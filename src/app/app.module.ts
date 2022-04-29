@@ -20,6 +20,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { PokemonTypeFilterPipe } from './pipes/pokemon-type-filter.pipe';
 import { CreateUserTemplateDrivenComponent } from './pages/create-user-template-driven/create-user-template-driven.component';
+import { ForbiddenNamesDirective } from './directives/forbidden-names.directive';
 
 registerLocaleData(localeFr);
 
@@ -39,6 +40,7 @@ registerLocaleData(localeFr);
     ShortenPipe,
     PokemonTypeFilterPipe,
     CreateUserTemplateDrivenComponent,
+    ForbiddenNamesDirective,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
