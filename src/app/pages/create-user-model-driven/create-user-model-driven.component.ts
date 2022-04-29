@@ -15,4 +15,8 @@ export class CreateUserModelDrivenComponent {
       email: new FormControl(),
     });
   }
+
+  onSubmit(): void {
+    console.log(this.userForm);
+  }
 }

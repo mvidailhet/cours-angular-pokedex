@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container bg-light mt-5 p-3">
-  <form [formGroup]="userForm">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <div class="form-group mb-3">
       <label for="usernameInput">Nom</label>
       <input class="form-control" id="usernameInput" type="text" formControlName="username" />
