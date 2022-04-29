@@ -32,6 +32,14 @@
         formControlName="description"
       ></textarea>
     </div>
+    <div formArrayName="hobbies">
+      <p>Centre d'intérêt</p>
+      <button class="btn btn-secondary mb-2" type="button" (click)="onAddHobby()">Ajouter un centre d'intérêt</button>
+      <div class="form-group mb-3" *ngFor="let hobbyControl of hobbies.controls; let i = index">
+        <label for="hobby-{{ i }}">N°{{ i + 1 }}</label>
+        <input id="hobby-{{ i }}" type="text" class="form-control" [formControlName]="i" />
+      </div>
+    </div>
     <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Valider</button>
   </form>
 </div>
