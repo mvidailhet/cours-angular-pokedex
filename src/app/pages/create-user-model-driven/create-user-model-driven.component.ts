@@ -12,7 +12,7 @@ export class CreateUserModelDrivenComponent {
   constructor() {
     this.userForm = new FormGroup({
       userData: new FormGroup({
-        username: new FormControl('Mitch', Validators.required),
+        username: new FormControl('Mitch', [Validators.required, this.forbiddenNamesValidator]),
         email: new FormControl(null, [Validators.required, Validators.email]),
       }),
       description: new FormControl(null),
@@ -39,5 +39,13 @@ export class CreateUserModelDrivenComponent {
   onAddHobby(): void {
     const control = new FormControl(null, Validators.required);
     this.hobbies.push(control);
+  }
+
+  forbiddenNamesValidator(control: FormControl): { [s: string]: boolean } | null {
+    const forbiddenNames = ['Mitch', 'Robert'];
+    if (forbiddenNames.includes(control.value)) {
+      return { nameIsForbidden: true };
+    }
+    return null;
   }
 }
