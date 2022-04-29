@@ -44,6 +44,8 @@ $pokemon-type-colors: (
 
     @if lightness($hex) >= 50 {
       color: #000;
+    } @else {
+      color: #fff;
     }
   }
 }
