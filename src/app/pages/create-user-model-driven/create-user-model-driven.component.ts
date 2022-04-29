@@ -11,20 +11,23 @@ export class CreateUserModelDrivenComponent {
 
   constructor() {
     this.userForm = new FormGroup({
-      username: new FormControl('Mitch', Validators.required),
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      userData: new FormGroup({
+        username: new FormControl('Mitch', Validators.required),
+        email: new FormControl(null, [Validators.required, Validators.email]),
+      }),
+      description: new FormControl(null),
     });
   }
 
   onSubmit(): void {
-    console.log(this.userForm);
+    console.log('this.userForm :', this.userForm);
   }
 
   get username(): FormControl {
-    return this.userForm.get('username') as FormControl;
+    return this.userForm.get('userData.username') as FormControl;
   }
 
   get email(): FormControl {
-    return this.userForm.get('email') as FormControl;
+    return this.userForm.get('userData.email') as FormControl;
   }
 }
