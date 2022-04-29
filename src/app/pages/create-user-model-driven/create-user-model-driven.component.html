@@ -18,11 +18,17 @@
         <label for="emailInput">Adresse email</label>
         <input class="form-control" id="emailInput" type="email" name="email" formControlName="email" />
         <ng-container *ngIf="email.touched">
+          <div *ngIf="email.status === 'PENDING'" class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+          </div>
           <div class="form-text text-danger" *ngIf="email.errors?.required">
             Veuillez fournir une adresse électronique.
           </div>
           <div class="form-text text-danger" *ngIf="email.errors?.email">
             Veuillez fournir une adresse électronique valide.
+          </div>
+          <div class="form-text text-danger" *ngIf="email.errors?.emailIsForbidden">
+            Cette adresse électronique est interdite.
           </div>
         </ng-container>
       </div>

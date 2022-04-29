@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create-user-model-driven',
@@ -13,7 +13,7 @@ export class CreateUserModelDrivenComponent {
     this.userForm = new FormGroup({
       userData: new FormGroup({
         username: new FormControl('Mitch', [Validators.required, this.forbiddenNamesValidator]),
-        email: new FormControl(null, [Validators.required, Validators.email]),
+        email: new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmailsAsyncValidator),
       }),
       description: new FormControl(null),
       hobbies: new FormArray([]),
@@ -47,5 +47,18 @@ export class CreateUserModelDrivenComponent {
       return { nameIsForbidden: true };
     }
     return null;
+  }
+
+  forbiddenEmailsAsyncValidator(control: AbstractControl): Promise<{ [s: string]: boolean } | null> {
+    const forbiddenEmails = ['michel.vidailhet@gmail.com'];
+    return new Promise<{ [s: string]: boolean } | null>((resolve) => {
+      setTimeout(() => {
+        if (forbiddenEmails.includes(control.value)) {
+          resolve({ emailIsForbidden: true });
+        } else {
+          resolve(null);
+        }
+      }, 3000);
+    });
   }
 }
