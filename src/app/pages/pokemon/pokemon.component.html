@@ -1,0 +1,18 @@
+<app-header></app-header>
+<div class="container">
+  <h2 class="my-5">{{ pokemon?.name }}</h2>
+  <nav class="nav nav-tabs">
+    <a class="nav-link active" routerLink="general" routerLinkActive="active" queryParamsHandling="merge">General</a>
+    <a class="nav-link" routerLink="stats" routerLinkActive="active" queryParamsHandling="merge">Stats</a>
+    <a class="nav-link" routerLink="evolutions" routerLinkActive="active" queryParamsHandling="merge">Evolutions</a>
+  </nav>
+
+  <div class="p-3">Onglet 'Général'</div>
+
+  <nav class="navbar fixed-bottom navbar-light bg-light p-4">
+    <div class="container-fluid">
+      <button class="btn btn-primary" (click)="goToPreviousPokemon()">Pokémon précédent</button>
+      <button class="btn btn-primary" (click)="goToNextPokemon()">Pokémon suivant</button>
+    </div>
+  </nav>
+</div>
