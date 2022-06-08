@@ -20,6 +20,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { PokemonTypeFilterPipe } from './pipes/pokemon-type-filter.pipe';
 import { CreateUserModelDrivenComponent } from './pages/create-user-model-driven/create-user-model-driven.component';
+import { SamePasswordValidatorComponent } from './pages/same-password-validator/same-password-validator.component';
 
 registerLocaleData(localeFr);
 
@@ -39,6 +40,7 @@ registerLocaleData(localeFr);
     ShortenPipe,
     PokemonTypeFilterPipe,
     CreateUserModelDrivenComponent,
+    SamePasswordValidatorComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],

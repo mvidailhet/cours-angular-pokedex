@@ -9,6 +9,7 @@ import { PokemonComponent } from './pages/pokemon/pokemon.component';
 import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.component';
 import { GeneralComponent } from './pages/pokemon/tabs/general/general.component';
 import { StatsComponent } from './pages/pokemon/tabs/stats/stats.component';
+import { SamePasswordValidatorComponent } from './pages/same-password-validator/same-password-validator.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'create-user-model-driven',
     component: CreateUserModelDrivenComponent,
+  },
+  {
+    path: 'same-password-validator',
+    component: SamePasswordValidatorComponent,
   },
   {
     canActivate: [AuthGuard],
