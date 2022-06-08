@@ -25,6 +25,10 @@ export class SamePasswordValidatorComponent {
     return this.form.controls;
   }
 
+  get formErrors() {
+    return this.form.errors;
+  }
+
   submit() {
     console.log(this.form);
   }
@@ -36,10 +40,8 @@ export class SamePasswordValidatorComponent {
       if (!matchingControl || !passwordControl) {
         throw new Error('did not find control');
       }
-      if (matchingControl.errors && !matchingControl.errors.confirmedValidator) return null;
       if (passwordControl.value === matchingControl.value) return null;
       const errors = { confirmedValidator: true };
-      matchingControl.setErrors(errors);
       return errors;
     };
   }
