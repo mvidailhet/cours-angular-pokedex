@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body row">
     <div class="col">
-      <span>{{ pokemon.name }}</span>
+      <span class="fw-bold">{{ pokemon.name | titlecase | shorten: 4 }}</span>
     </div>
     <div class="col">
       <span
@@ -11,6 +11,12 @@
       >
         Niv. {{ pokemon.level }}
       </span>
+    </div>
+    <div class="col">
+      <span class="badge badge-secondary pokemon-background-type-{{ keyOfType }}">{{ pokemon.type | titlecase }}</span>
+    </div>
+    <div class="col">
+      {{ pokemon.createdAt | date: 'fullDate':'':'fr-FR' | titlecase }}
     </div>
   </div>
   <div class="close-button-container p-3">
