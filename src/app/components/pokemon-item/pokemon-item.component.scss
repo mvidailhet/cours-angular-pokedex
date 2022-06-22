@@ -41,24 +41,11 @@ $pokemon-type-colors: (
 @each $name, $hex in $pokemon-type-colors {
   .pokemon-background-type-#{$name} {
     background-color: $hex;
-  }
-}
 
-.pokemon-background-type {
-  &-GRASS,
-  &-FIRE,
-  &-WATER,
-  &-NORMAL,
-  &-FLYING,
-  &-GROUND,
-  &-ROCK,
-  &-BUG,
-  &-STEEL,
-  &-ELECTRIC,
-  &-PSYCHIC,
-  &-ICE,
-  &-DRAGON,
-  &-FAIRY {
-    color: #000;
+    @if lightness($hex) >= 50 {
+      color: #000;
+    } @else {
+      color: #fff;
+    }
   }
 }
