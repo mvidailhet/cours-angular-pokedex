@@ -1,0 +1,56 @@
+<app-header></app-header>
+<div class="container bg-light mt-5 p-3">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div formGroupName="userData">
+      <div class="form-group mb-3">
+        <label for="usernameInput">Nom</label>
+        <input class="form-control" id="usernameInput" type="text" name="username" formControlName="username" />
+        <ng-container *ngIf="username.touched">
+          <div class="form-text text-danger" *ngIf="username.errors?.required">
+            Veuillez fournir un nom d'utilisateur.
+          </div>
+          <div class="form-text text-danger" *ngIf="username.errors?.nameIsForbidden">
+            Ce nom d'utilisateur est interdit.
+          </div>
+        </ng-container>
+      </div>
+      <div class="form-group mb-3">
+        <label for="emailInput">Adresse email</label>
+        <input class="form-control" id="emailInput" type="email" name="email" formControlName="email" />
+        <ng-container *ngIf="email.touched">
+          <div *ngIf="email.status === 'PENDING'" class="spinner-border spinner-border-sm text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+          <div class="form-text text-danger" *ngIf="email.errors?.required">
+            Veuillez fournir une adresse électronique.
+          </div>
+          <div class="form-text text-danger" *ngIf="email.errors?.email">
+            Veuillez fournir une adresse électronique valide.
+          </div>
+          <div class="form-text text-danger" *ngIf="email.errors?.emailIsForbidden">
+            Cette adresse électronique est interdite.
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="descriptionTexarea">Description</label>
+      <textarea
+        class="form-control"
+        id="descriptionTexarea"
+        name="description"
+        rows="3"
+        formControlName="description"
+      ></textarea>
+    </div>
+    <div formArrayName="hobbies">
+      <p>Centre d'intérêt</p>
+      <button class="btn btn-secondary mb-2" type="button" (click)="onAddHobby()">Ajouter un centre d'intérêt</button>
+      <div class="form-group mb-3" *ngFor="let hobbyControl of hobbies.controls; let i = index">
+        <label for="hobby-{{ i }}">N°{{ i + 1 }}</label>
+        <input id="hobby-{{ i }}" type="text" class="form-control" [formControlName]="i" />
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Valider</button>
+  </form>
+</div>
