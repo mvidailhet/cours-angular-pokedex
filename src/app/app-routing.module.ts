@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { PreventPokemonFormLeaveGuard } from './guards/prevent-pokemon-form-leave.guard';
 import { CreateUserModelDrivenComponent } from './pages/create-user-model-driven/create-user-model-driven.component';
+import { CreateUserTemplateDrivenComponent } from './pages/create-user-template-driven/create-user-template-driven.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ErrorComponent } from './pages/pokemon/error/error.component';
 import { PokemonComponent } from './pages/pokemon/pokemon.component';
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'create-user-model-driven',
     component: CreateUserModelDrivenComponent,
+  },
+  {
+    path: 'create-user-template-driven',
+    component: CreateUserTemplateDrivenComponent,
   },
   {
     canActivate: [AuthGuard],
