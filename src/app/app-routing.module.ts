@@ -5,6 +5,7 @@ import { PreventPokemonFormLeaveGuard } from './guards/prevent-pokemon-form-leav
 import { CreateUserModelDrivenComponent } from './pages/create-user-model-driven/create-user-model-driven.component';
 import { CreateUserTemplateDrivenComponent } from './pages/create-user-template-driven/create-user-template-driven.component';
 import { HomeComponent } from './pages/home/home.component';
+import { PokedexComponent } from './pages/pokedex/pokedex.component';
 import { ErrorComponent } from './pages/pokemon/error/error.component';
 import { PokemonComponent } from './pages/pokemon/pokemon.component';
 import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: 'create-user-template-driven',
     component: CreateUserTemplateDrivenComponent,
+  },
+  {
+    path: 'pokedex',
+    component: PokedexComponent,
   },
   {
     canActivate: [AuthGuard],
