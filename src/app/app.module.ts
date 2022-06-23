@@ -24,6 +24,8 @@ import { SamePasswordValidatorComponent } from './pages/same-password-validator/
 import { CreateUserTemplateDrivenComponent } from './pages/create-user-template-driven/create-user-template-driven.component';
 import { ForbiddenNamesDirective } from './directives/forbidden-names.directive';
 import { PokedexComponent } from './pages/pokedex/pokedex.component';
+import { PokedexListComponent } from './components/pokedex-list/pokedex-list.component';
+import { PokedexItemComponent } from './components/pokedex-item/pokedex-item.component';
 
 registerLocaleData(localeFr);
 
@@ -47,6 +49,8 @@ registerLocaleData(localeFr);
     CreateUserTemplateDrivenComponent,
     ForbiddenNamesDirective,
     PokedexComponent,
+    PokedexListComponent,
+    PokedexItemComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
