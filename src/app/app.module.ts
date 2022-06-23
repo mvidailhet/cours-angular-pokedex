@@ -21,6 +21,8 @@ import { ShortenPipe } from './pipes/shorten.pipe';
 import { PokemonTypeFilterPipe } from './pipes/pokemon-type-filter.pipe';
 import { CreateUserModelDrivenComponent } from './pages/create-user-model-driven/create-user-model-driven.component';
 import { SamePasswordValidatorComponent } from './pages/same-password-validator/same-password-validator.component';
+import { CreateUserTemplateDrivenComponent } from './pages/create-user-template-driven/create-user-template-driven.component';
+import { ForbiddenNamesDirective } from './directives/forbidden-names.directive';
 
 registerLocaleData(localeFr);
 
@@ -41,6 +43,8 @@ registerLocaleData(localeFr);
     PokemonTypeFilterPipe,
     CreateUserModelDrivenComponent,
     SamePasswordValidatorComponent,
+    CreateUserTemplateDrivenComponent,
+    ForbiddenNamesDirective,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
