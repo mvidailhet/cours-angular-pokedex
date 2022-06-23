@@ -1,4 +1,8 @@
 <div class="container bg-light">
   <h2 class="my-5">Pokédex</h2>
-  <app-pokedex-item></app-pokedex-item>
+  <div class="container">
+    <div class="row">
+      <app-pokedex-item class="col-12 col-md-4" *ngFor="let pokemon of pokemons" [pokemon]="pokemon"></app-pokedex-item>
+    </div>
+  </div>
 </div>
