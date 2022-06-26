@@ -23,62 +23,37 @@ export class PokedexListComponent implements OnInit {
 
   getPokemonsFromApi() {
     this.apiService.fetchPokemons().subscribe((response) => {
-      this.pokemons = [...response.results];
-      this.urlNextPokemons = response.next;
-      this.urlPreviousPokemons = response.prev;
+      this.updatePokemonsList(response);
       this.totalPage = Math.ceil(response.count / this.apiService.nbPokemons);
       this.getPages(this.totalPage);
-      this.currentPage = 1;
-      console.log('this.currentPage :', this.currentPage);
-      console.log('response :', response);
-      console.log('this.totalPage - 3 :', this.totalPage - 3);
-      // console.log('this.urlNextPokemons :', this.urlNextPokemons);
-      // console.log('this.urlPreviousPokemons :', this.urlPreviousPokemons);
     });
+    this.currentPage = 1;
   }
 
   goToPreviousPokemons() {
     if (!this.urlPreviousPokemons || this.urlPreviousPokemons === null) return;
     this.apiService.fetchOtherPokemons(this.urlPreviousPokemons).subscribe((response) => {
-      this.pokemons = [...response.results];
-      this.urlNextPokemons = response.next;
-      this.urlPreviousPokemons = response.previous;
-      this.currentPage -= 1;
-      console.log('this.currentPage :', this.currentPage);
-
-      // console.log('response :', response);
+      this.updatePokemonsList(response);
     });
+    this.currentPage -= 1;
   }
 
   goToNextPokemons() {
     if (!this.urlNextPokemons || this.urlNextPokemons === null) return;
     this.apiService.fetchOtherPokemons(this.urlNextPokemons).subscribe((response) => {
-      this.pokemons = [...response.results];
-      this.urlNextPokemons = response.next;
-      this.urlPreviousPokemons = response.previous;
-      this.currentPage += 1;
-      console.log('this.currentPage :', this.currentPage);
-
-      // console.log('response :', response);
+      this.updatePokemonsList(response);
     });
+    this.currentPage += 1;
   }
 
   goToPagePokemons(pageIndex: number) {
-    console.log('pageIndex :', pageIndex);
-    console.log('this.pages[pageIndex].offset :', this.pages[pageIndex].offset);
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.apiService.nbPokemons}&offset=${this.pages[pageIndex].offset}`;
 
     this.apiService.fetchOtherPokemons(url).subscribe((response) => {
-      console.log('url :', url);
-      this.pokemons = [...response.results];
-      this.urlNextPokemons = response.next;
-      this.urlPreviousPokemons = response.previous;
-      // console.log('response :', response);
+      this.updatePokemonsList(response);
     });
 
     this.currentPage = pageIndex + 1;
-    console.log('pageIndex :', pageIndex);
-    console.log('this.currentPage :', this.currentPage);
   }
 
   getPages(totalPage: number) {
@@ -86,7 +61,13 @@ export class PokedexListComponent implements OnInit {
     for (let index = 0; index < totalPage; index++) {
       this.pages[index] = { offset: index * this.apiService.nbPokemons };
     }
-    console.log('this.pages :', this.pages);
     return this.pages;
+  }
+
+  updatePokemonsList(response: any) {
+    this.pokemons = [...response.results];
+    this.urlNextPokemons = response.next;
+    this.urlPreviousPokemons = response.previous;
+    console.log('response :', response);
   }
 }
