@@ -19,4 +19,8 @@ export class PokeApiService {
     // console.log('url :', url);
     return this.httpClient.get<any>(url);
   }
+
+  fetchPokemonData(url: string): Observable<any> {
+    return this.httpClient.get<any>(url);
+  }
 }

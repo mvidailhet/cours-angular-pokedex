@@ -66,8 +66,13 @@ export class PokedexListComponent implements OnInit {
 
   updatePokemonsList(response: any) {
     this.pokemons = [...response.results];
+    this.pokemons.forEach((pokemon) => {
+      this.apiService.fetchPokemonData(pokemon.url).subscribe((data) => {
+        // eslint-disable-next-line no-param-reassign
+        pokemon.data = data;
+      });
+    });
     this.urlNextPokemons = response.next;
     this.urlPreviousPokemons = response.previous;
-    console.log('response :', response);
   }
 }
