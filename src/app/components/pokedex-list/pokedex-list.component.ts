@@ -32,7 +32,7 @@ export class PokedexListComponent implements OnInit {
 
   goToPreviousPokemons() {
     if (!this.urlPreviousPokemons || this.urlPreviousPokemons === null) return;
-    this.apiService.fetchOtherPokemons(this.urlPreviousPokemons).subscribe((response) => {
+    this.apiService.callPokeApi(this.urlPreviousPokemons).subscribe((response) => {
       this.updatePokemonsList(response);
     });
     this.currentPage -= 1;
@@ -40,7 +40,7 @@ export class PokedexListComponent implements OnInit {
 
   goToNextPokemons() {
     if (!this.urlNextPokemons || this.urlNextPokemons === null) return;
-    this.apiService.fetchOtherPokemons(this.urlNextPokemons).subscribe((response) => {
+    this.apiService.callPokeApi(this.urlNextPokemons).subscribe((response) => {
       this.updatePokemonsList(response);
     });
     this.currentPage += 1;
@@ -49,7 +49,7 @@ export class PokedexListComponent implements OnInit {
   goToPagePokemons(pageIndex: number) {
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.apiService.nbPokemons}&offset=${this.pages[pageIndex].offset}`;
 
-    this.apiService.fetchOtherPokemons(url).subscribe((response) => {
+    this.apiService.callPokeApi(url).subscribe((response) => {
       this.updatePokemonsList(response);
     });
 
@@ -67,7 +67,7 @@ export class PokedexListComponent implements OnInit {
   updatePokemonsList(response: any) {
     this.pokemons = [...response.results];
     this.pokemons.forEach((pokemon) => {
-      this.apiService.fetchPokemonData(pokemon.url).subscribe((data) => {
+      this.apiService.callPokeApi(pokemon.url).subscribe((data) => {
         // eslint-disable-next-line no-param-reassign
         pokemon.data = data;
       });
