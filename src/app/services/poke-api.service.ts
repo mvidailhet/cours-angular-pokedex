@@ -6,10 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PokeApiService {
+  nbPokemons: number = 63;
+
   constructor(private httpClient: HttpClient) {}
 
-  fetchPokemon(nbPokemons: number): Observable<any> {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${nbPokemons}`;
+  fetchPokemons(): Observable<any> {
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.nbPokemons}`;
+    return this.httpClient.get<any>(url);
+  }
+
+  fetchOtherPokemons(url: string): Observable<any> {
+    // console.log('url :', url);
     return this.httpClient.get<any>(url);
   }
 }
