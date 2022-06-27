@@ -2,6 +2,5 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
-[routerLink] {
-  cursor: pointer;
-}
+@import 'abstract/variables';
+@import 'base/base';

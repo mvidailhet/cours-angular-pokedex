@@ -1,25 +1,3 @@
-$pokemon-type-colors: (
-  GRASS: limegreen,
-  FIRE: orangered,
-  WATER: dodgerblue,
-  POISON: purple,
-  NORMAL: antiquewhite,
-  FIGHTING: maroon,
-  FLYING: mediumpurple,
-  GROUND: goldenrod,
-  ROCK: darkgoldenrod,
-  BUG: olive,
-  GHOST: slateblue,
-  STEEL: slategrey,
-  ELECTRIC: gold,
-  PSYCHIC: orchid,
-  ICE: lightcyan,
-  DRAGON: mediumslateblue,
-  DARK: saddlebrown,
-  FAIRY: violet,
-  SHADOW: indigo,
-);
-
 .is-green {
   color: black;
 }
@@ -36,16 +14,4 @@ $pokemon-type-colors: (
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-@each $name, $hex in $pokemon-type-colors {
-  .pokemon-background-type-#{$name} {
-    background-color: $hex;
-
-    @if lightness($hex) >= 50 {
-      color: #000;
-    } @else {
-      color: #fff;
-    }
-  }
 }

@@ -1,0 +1,15 @@
+[routerLink] {
+  cursor: pointer;
+}
+
+@each $name, $hex in $pokemon-type-colors {
+  .pokemon-background-type-#{$name} {
+    background-color: $hex;
+
+    @if lightness($hex) >= 50 {
+      color: #000;
+    } @else {
+      color: #fff;
+    }
+  }
+}
