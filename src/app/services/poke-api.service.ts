@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PokeApiService {
-  nbPokemons: number = 63;
+  nbPokemons: number = 21;
 
   constructor(private httpClient: HttpClient) {}
 

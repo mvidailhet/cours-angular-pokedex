@@ -15,16 +15,16 @@ export class PokedexListComponent implements OnInit {
   pages: any[] = [];
   isDisplayable!: boolean;
 
-  constructor(private apiService: PokeApiService) {}
+  constructor(private pokeApiService: PokeApiService) {}
 
   ngOnInit(): void {
     this.getPokemonsFromApi();
   }
 
   getPokemonsFromApi() {
-    this.apiService.fetchPokemons().subscribe((response) => {
+    this.pokeApiService.fetchPokemons().subscribe((response) => {
       this.updatePokemonsList(response);
-      this.totalPage = Math.ceil(response.count / this.apiService.nbPokemons);
+      this.totalPage = Math.ceil(response.count / this.pokeApiService.nbPokemons);
       this.getPages(this.totalPage);
     });
     this.currentPage = 1;
@@ -32,7 +32,7 @@ export class PokedexListComponent implements OnInit {
 
   goToPreviousPokemons() {
     if (!this.urlPreviousPokemons || this.urlPreviousPokemons === null) return;
-    this.apiService.callPokeApi(this.urlPreviousPokemons).subscribe((response) => {
+    this.pokeApiService.callPokeApi(this.urlPreviousPokemons).subscribe((response) => {
       this.updatePokemonsList(response);
     });
     this.currentPage -= 1;
@@ -40,16 +40,16 @@ export class PokedexListComponent implements OnInit {
 
   goToNextPokemons() {
     if (!this.urlNextPokemons || this.urlNextPokemons === null) return;
-    this.apiService.callPokeApi(this.urlNextPokemons).subscribe((response) => {
+    this.pokeApiService.callPokeApi(this.urlNextPokemons).subscribe((response) => {
       this.updatePokemonsList(response);
     });
     this.currentPage += 1;
   }
 
   goToPagePokemons(pageIndex: number) {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.apiService.nbPokemons}&offset=${this.pages[pageIndex].offset}`;
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.pokeApiService.nbPokemons}&offset=${this.pages[pageIndex].offset}`;
 
-    this.apiService.callPokeApi(url).subscribe((response) => {
+    this.pokeApiService.callPokeApi(url).subscribe((response) => {
       this.updatePokemonsList(response);
     });
 
@@ -59,19 +59,13 @@ export class PokedexListComponent implements OnInit {
   getPages(totalPage: number) {
     // eslint-disable-next-line no-plusplus
     for (let index = 0; index < totalPage; index++) {
-      this.pages[index] = { offset: index * this.apiService.nbPokemons };
+      this.pages[index] = { offset: index * this.pokeApiService.nbPokemons };
     }
     return this.pages;
   }
 
   updatePokemonsList(response: any) {
     this.pokemons = [...response.results];
-    this.pokemons.forEach((pokemon) => {
-      this.apiService.callPokeApi(pokemon.url).subscribe((data) => {
-        // eslint-disable-next-line no-param-reassign
-        pokemon.data = data;
-      });
-    });
     this.urlNextPokemons = response.next;
     this.urlPreviousPokemons = response.previous;
   }
