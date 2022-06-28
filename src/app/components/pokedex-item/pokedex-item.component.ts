@@ -10,6 +10,7 @@ export class PokedexItemComponent implements OnInit {
   @Input()
   public pokemon!: any;
   keyOfType!: string;
+  isLoading = true;
 
   constructor(private pokeApiService: PokeApiService) {}
 
@@ -21,6 +22,7 @@ export class PokedexItemComponent implements OnInit {
     this.pokeApiService.callPokeApi(this.pokemon.url).subscribe((data) => {
       // eslint-disable-next-line no-param-reassign
       this.pokemon.data = data;
+      this.isLoading = false;
     });
   }
 }

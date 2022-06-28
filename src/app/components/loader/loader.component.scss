@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%);
+
+  .spinner-border {
+    width: 2.5em;
+    height: 2.5em;
+  }
+
+  .big-loader {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -27,6 +27,7 @@ import { ForbiddenNamesDirective } from './directives/forbidden-names.directive'
 import { PokedexComponent } from './pages/pokedex/pokedex.component';
 import { PokedexListComponent } from './components/pokedex-list/pokedex-list.component';
 import { PokedexItemComponent } from './components/pokedex-item/pokedex-item.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 registerLocaleData(localeFr);
 
@@ -52,6 +53,7 @@ registerLocaleData(localeFr);
     PokedexComponent,
     PokedexListComponent,
     PokedexItemComponent,
+    LoaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],

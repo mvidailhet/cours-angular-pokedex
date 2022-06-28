@@ -1,0 +1,8 @@
+<div
+  class="spinner-border text-warning m-auto"
+  role="status"
+  *ngIf="isLoading"
+  [ngClass]="{ 'big-loader': isBigLoader }"
+>
+  <span class="visually-hidden">Loading...</span>
+</div>

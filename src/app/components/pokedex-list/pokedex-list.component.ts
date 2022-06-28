@@ -14,6 +14,7 @@ export class PokedexListComponent implements OnInit {
   totalPage!: number;
   pages: any[] = [];
   isDisplayable!: boolean;
+  isLoading = true;
 
   constructor(private pokeApiService: PokeApiService) {}
 
@@ -68,5 +69,6 @@ export class PokedexListComponent implements OnInit {
     this.pokemons = [...response.results];
     this.urlNextPokemons = response.next;
     this.urlPreviousPokemons = response.previous;
+    this.isLoading = false;
   }
 }
