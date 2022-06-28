@@ -14,8 +14,8 @@ export class PokeApiService {
     return this.httpClient.get<any>(url);
   }
 
-  fetchPokemons(): Observable<any> {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.nbPokemons}`;
+  fetchPokemons(offset: string | null = null): Observable<any> {
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.nbPokemons}${offset ? `&offset=${offset}` : ''}`;
     return this.callPokeApi(url);
   }
 }

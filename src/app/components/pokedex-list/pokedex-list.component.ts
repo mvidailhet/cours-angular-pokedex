@@ -48,9 +48,9 @@ export class PokedexListComponent implements OnInit {
   }
 
   goToPagePokemons(pageIndex: number) {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.pokeApiService.nbPokemons}&offset=${this.pages[pageIndex].offset}`;
+    const { offset } = this.pages[pageIndex];
 
-    this.pokeApiService.callPokeApi(url).subscribe((response) => {
+    this.pokeApiService.fetchPokemons(offset).subscribe((response) => {
       this.updatePokemonsList(response);
     });
 
@@ -66,7 +66,7 @@ export class PokedexListComponent implements OnInit {
   }
 
   updatePokemonsList(response: any) {
-    this.pokemons = [...response.results];
+    this.pokemons = response.results;
     this.urlNextPokemons = response.next;
     this.urlPreviousPokemons = response.previous;
     this.isLoading = false;
