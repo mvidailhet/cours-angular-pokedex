@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PokeApiService } from 'src/app/services/poke-api.service';
 
 @Component({
@@ -6,69 +6,27 @@ import { PokeApiService } from 'src/app/services/poke-api.service';
   templateUrl: './pokedex-list.component.html',
   styleUrls: ['./pokedex-list.component.scss'],
 })
-export class PokedexListComponent implements OnInit {
+export class PokedexListComponent implements OnInit, OnDestroy {
   pokemons: any[] = [];
-  urlNextPokemons!: string;
-  urlPreviousPokemons!: string;
-  currentPage!: number;
-  totalPage!: number;
-  pages: any[] = [];
-  isDisplayable!: boolean;
   isLoading = true;
+  // On crée l'oservable qui sera chargée de surveiller notre sujet
+  pokemons$ = this.pokeApiService.pokemons.asObservable();
+  @Input() currentPage: number | undefined;
 
   constructor(private pokeApiService: PokeApiService) {}
 
   ngOnInit(): void {
-    this.getPokemonsFromApi();
+    this.pokeApiService.fetchPokemons(this.currentPage! - 1).subscribe();
   }
 
-  getPokemonsFromApi() {
-    this.pokeApiService.fetchPokemons().subscribe((response) => {
-      this.updatePokemonsList(response);
-      this.totalPage = Math.ceil(response.count / this.pokeApiService.nbPokemons);
-      this.getPages(this.totalPage);
-    });
-    this.currentPage = 1;
+  // À la destruction du composant on se désabonne à l'observable
+  ngOnDestroy() {
+    this.pokemonsSubscription.unsubscribe();
   }
 
-  goToPreviousPokemons() {
-    if (!this.urlPreviousPokemons || this.urlPreviousPokemons === null) return;
-    this.pokeApiService.callPokeApi(this.urlPreviousPokemons).subscribe((response) => {
-      this.updatePokemonsList(response);
-    });
-    this.currentPage -= 1;
-  }
-
-  goToNextPokemons() {
-    if (!this.urlNextPokemons || this.urlNextPokemons === null) return;
-    this.pokeApiService.callPokeApi(this.urlNextPokemons).subscribe((response) => {
-      this.updatePokemonsList(response);
-    });
-    this.currentPage += 1;
-  }
-
-  goToPagePokemons(pageIndex: number) {
-    const { offset } = this.pages[pageIndex];
-
-    this.pokeApiService.fetchPokemons(offset).subscribe((response) => {
-      this.updatePokemonsList(response);
-    });
-
-    this.currentPage = pageIndex + 1;
-  }
-
-  getPages(totalPage: number) {
-    // eslint-disable-next-line no-plusplus
-    for (let index = 0; index < totalPage; index++) {
-      this.pages[index] = { offset: index * this.pokeApiService.nbPokemons };
-    }
-    return this.pages;
-  }
-
-  updatePokemonsList(response: any) {
-    this.pokemons = response.results;
-    this.urlNextPokemons = response.next;
-    this.urlPreviousPokemons = response.previous;
+  // On s'abonne à l'observable puis on réalise les opérations que l'on désire avec les données reçues
+  pokemonsSubscription = this.pokemons$.subscribe((newPokemons) => {
+    this.pokemons = newPokemons;
     this.isLoading = false;
-  }
+  });
 }

@@ -2,56 +2,14 @@
   <h2 class="my-5">Pokédex</h2>
   <div class="container">
     <app-loader [isLoading]="isLoading" [isBigLoader]="true"></app-loader>
-    <div class="row">
-      <app-pokedex-item class="col-12 col-md-4" *ngFor="let pokemon of pokemons" [pokemon]="pokemon"></app-pokedex-item>
-    </div>
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [ngClass]="{ disabled: !urlPreviousPokemons }">
-        <a class="page-link" (click)="goToPreviousPokemons()">Pokémon précédent</a>
-      </li>
-
-      <!-- Affiche le bouton de la première page -->
-      <li class="page-item" [ngClass]="{ active: currentPage === 1 }">
-        <a class="page-link" (click)="goToPagePokemons(0)">{{ 1 }}</a>
-      </li>
-
-      <!-- Affiche '...' la page courante est à plus de 3 pages de la première -->
-      <ng-container *ngIf="currentPage > 3">
-        <li class="page-item disabled"><span class="page-link">...</span></li>
-      </ng-container>
-
-      <!-- Affiche le bouton de la page courante, ainsi que la précédente et la suivante.
-        Si la page courante est parmi les 3 premières, les 3 premier boutons s'affichent.
-        Si la page courante est parmi les 3 dernières, les 3 derniers boutons s'affichent. -->
-      <ng-container *ngFor="let page of pages; let index = index">
-        <li
-          class="page-item"
-          [ngClass]="{ active: index + 1 === currentPage }"
-          *ngIf="
-            index > 0 &&
-            index < totalPage - 1 &&
-            ((currentPage <= 3 && index <= 2) ||
-              (currentPage >= totalPage - 2 && index >= totalPage - 4) ||
-              (index >= currentPage - 2 && index <= currentPage))
-          "
-        >
-          <a class="page-link" (click)="goToPagePokemons(index)">{{ index + 1 }}</a>
-        </li>
-      </ng-container>
-
-      <!-- Affiche '...' la page courante est à plus de 3 pages de la dernière -->
-      <ng-container *ngIf="currentPage < totalPage - 3">
-        <li class="page-item disabled"><span class="page-link">...</span></li>
-      </ng-container>
-
-      <!-- Affiche le bouton de la dernière page -->
-      <li class="page-item" [ngClass]="{ active: currentPage === totalPage }">
-        <a class="page-link" (click)="goToPagePokemons(totalPage - 1)">{{ totalPage }}</a>
-      </li>
-
-      <li class="page-item" [ngClass]="{ disabled: !urlNextPokemons }">
-        <a class="page-link" (click)="goToNextPokemons()">Pokémon suivant</a>
-      </li>
-    </ul>
+    <ng-container *ngIf="!isLoading">
+      <div class="row">
+        <app-pokedex-item
+          class="col-12 col-md-4"
+          *ngFor="let pokemon of pokemons"
+          [pokemon]="pokemon"
+        ></app-pokedex-item>
+      </div>
+    </ng-container>
   </div>
 </div>

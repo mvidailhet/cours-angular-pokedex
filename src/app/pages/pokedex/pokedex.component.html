@@ -1,4 +1,5 @@
 <app-header></app-header>
 <div class="container">
-  <app-pokedex-list></app-pokedex-list>
+  <app-pokedex-list [currentPage]="page"></app-pokedex-list>
+  <app-pagination [currentPage]="page"></app-pagination>
 </div>

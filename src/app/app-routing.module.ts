@@ -32,7 +32,7 @@ const routes: Routes = [
     component: CreateUserTemplateDrivenComponent,
   },
   {
-    path: 'pokedex',
+    path: 'pokedex/:page',
     component: PokedexComponent,
   },
   {
