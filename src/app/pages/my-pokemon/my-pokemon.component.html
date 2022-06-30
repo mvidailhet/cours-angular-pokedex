@@ -9,10 +9,9 @@
 
   <div class="p-3">Onglet</div>
 
-  <nav class="navbar fixed-bottom navbar-light bg-light p-4">
-    <div class="container-fluid">
-      <button class="btn btn-primary" (click)="goToPreviousPokemon()">Pokémon précédent</button>
-      <button class="btn btn-primary" (click)="goToNextPokemon()">Pokémon suivant</button>
-    </div>
-  </nav>
+  <app-pokemon-navigation
+    [pokemonName]="pokemon?.name"
+    (goToPreviousPokemonClick)="goToPreviousPokemon()"
+    (goToNextPokemonClick)="goToNextPokemon()"
+  ></app-pokemon-navigation>
 </div>
