@@ -4,10 +4,10 @@
     <app-loader [isLoading]="isLoading"></app-loader>
     <ng-container *ngIf="!isLoading">
       <img
-        *ngIf="pokemon.data?.sprites.other['official-artwork'].front_default; else noImage"
+        *ngIf="pokemon.data?.image; else noImage"
         class="col card-image"
-        [src]="pokemon.data?.sprites.other['official-artwork'].front_default"
-        alt="..."
+        [src]="pokemon.data?.image"
+        alt="Image de {{ pokemon.name | titlecase }}"
       />
       <ng-template #noImage>
         <div class="col card-image">

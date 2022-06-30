@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PokeApiService } from 'src/app/services/poke-api.service';
+import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
   selector: 'app-pokedex-item',
@@ -12,15 +13,15 @@ export class PokedexItemComponent implements OnInit {
   keyOfType!: string;
   isLoading = true;
 
-  constructor(private pokeApiService: PokeApiService) {}
+  constructor(private pokeApiService: PokeApiService, private pkemonService: PokemonsService) {}
 
   ngOnInit() {
     this.getPokemonData();
   }
 
   getPokemonData() {
-    this.pokeApiService.callPokeApi(this.pokemon.url).subscribe((data) => {
-      // eslint-disable-next-line no-param-reassign
+    console.log('this.pokemon :', this.pokemon);
+    this.pkemonService.getPokemonData(this.pokemon.url).subscribe((data) => {
       this.pokemon.data = data;
       this.isLoading = false;
     });
