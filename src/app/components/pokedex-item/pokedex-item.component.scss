@@ -1,9 +1,15 @@
-.card {
-  min-height: 200px;
+.pokemon-link {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 
-  .card-image {
-    width: 50%;
-    display: inline-block;
-    margin: 1em auto;
+  .card {
+    min-height: 200px;
+
+    .card-image {
+      width: 50%;
+      display: inline-block;
+      margin: 1em auto;
+    }
   }
 }

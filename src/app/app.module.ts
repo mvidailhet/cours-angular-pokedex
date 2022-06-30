@@ -29,6 +29,7 @@ import { PokedexItemComponent } from './components/pokedex-item/pokedex-item.com
 import { LoaderComponent } from './components/loader/loader.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { MyPokemonItemComponent } from './components/my-pokemon-item/my-pokemon-item.component';
+import { PokemonComponent } from './pages/pokemon/pokemon.component';
 import { PokemonNavigationComponent } from './components/pokemon-navigation/pokemon-navigation.component';
 
 registerLocaleData(localeFr);
@@ -57,6 +58,7 @@ registerLocaleData(localeFr);
     PokedexItemComponent,
     LoaderComponent,
     PaginationComponent,
+    PokemonComponent,
     PokemonNavigationComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, HttpClientModule],

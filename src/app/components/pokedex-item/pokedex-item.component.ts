@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PokeApiService } from 'src/app/services/poke-api.service';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -10,10 +9,9 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 export class PokedexItemComponent implements OnInit {
   @Input()
   public pokemon!: any;
-  keyOfType!: string;
   isLoading = true;
 
-  constructor(private pokeApiService: PokeApiService, private pkemonService: PokemonsService) {}
+  constructor(private pkemonService: PokemonsService) {}
 
   ngOnInit() {
     this.getPokemonData();

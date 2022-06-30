@@ -12,6 +12,7 @@ import { EvolutionsComponent } from './components/tabs/evolutions/evolutions.com
 import { GeneralComponent } from './components/tabs/general/general.component';
 import { StatsComponent } from './components/tabs/stats/stats.component';
 import { SamePasswordValidatorComponent } from './pages/same-password-validator/same-password-validator.component';
+import { PokemonComponent } from './pages/pokemon/pokemon.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,29 @@ const routes: Routes = [
   {
     path: 'pokedex/:page',
     component: PokedexComponent,
+  },
+  {
+    path: 'pokemon/:name',
+    component: PokemonComponent,
+    children: [
+      {
+        path: 'general',
+        component: GeneralComponent,
+      },
+      {
+        path: 'stats',
+        component: StatsComponent,
+      },
+      {
+        path: 'evolutions',
+        component: EvolutionsComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'general',
+        pathMatch: 'full',
+      },
+    ],
   },
   {
     canActivate: [AuthGuard],
