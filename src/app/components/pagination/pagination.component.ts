@@ -13,6 +13,7 @@ export class PaginationComponent implements OnDestroy {
   pages: number[] = [];
   urlNextPokemons!: string;
   urlPreviousPokemons!: string;
+  isReady = false;
   // On crée l'oservables qui seront chargées de surveiller nos sujets
   urlPokemons$ = this.pokeApiService.urlPokemons.asObservable();
   totalPages$ = this.pokeApiService.totalPages.asObservable();
@@ -34,6 +35,8 @@ export class PaginationComponent implements OnDestroy {
   totalPagesSubscription = this.totalPages$.subscribe((totalPages) => {
     this.totalPages = totalPages;
     this.getPage();
+    this.isReady = (!Number.isNaN(this.totalPages) || this.totalPages !== undefined) && this.pages.length !== 0;
+    if (!this.isReady) console.error('Error: An error occured while creating the pagination');
   });
 
   goToPreviousPokemons() {
@@ -56,7 +59,6 @@ export class PaginationComponent implements OnDestroy {
   }
 
   getPage() {
-    // eslint-disable-next-line no-plusplus
     for (let index = 0; index < this.totalPages; index++) {
       this.pages[index] = index + 1;
     }
