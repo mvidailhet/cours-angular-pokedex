@@ -1,15 +1,15 @@
-/* eslint-disable max-len */
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Pokemon, PokemonsService } from 'src/app/services/pokemons.service';
+import { Pokemon } from 'src/app/models/pokemon';
+import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
   selector: 'app-pokemon',
-  templateUrl: './pokemon.component.html',
-  styleUrls: ['./pokemon.component.scss'],
+  templateUrl: './my-pokemon.component.html',
+  styleUrls: ['./my-pokemon.component.scss'],
 })
-export class PokemonComponent implements OnInit, OnDestroy {
+export class MyPokemonComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined;
   previousPokemonName: string | undefined;
   nextPokemonName: string | undefined;
@@ -38,16 +38,11 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
   handleRouteParams = (params: Params) => {
     const pokemonName = params.name;
+    console.log('pokemonName :', pokemonName);
     const pokemonIndex = this.pokemonService.findPokemonIndexByName(pokemonName);
     this.nextPokemonName = this.pokemonService.getNextPokemonName(pokemonName);
     this.previousPokemonName = this.pokemonService.getPreviousPokemonName(pokemonName);
-    this.pokemon = {
-      id: this.pokemonService.pokemons[pokemonIndex].id,
-      name: pokemonName,
-      type: this.pokemonService.pokemons[pokemonIndex].type,
-      level: this.pokemonService.pokemons[pokemonIndex].level,
-      createdAt: this.pokemonService.pokemons[pokemonIndex].createdAt,
-    };
+    this.pokemon = this.pokemonService.pokemons[pokemonIndex];
   };
 
   handleQueryParams = (queryParams: Params) => {
@@ -60,11 +55,14 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
   goToPreviousPokemon() {
     if (!this.previousPokemonName) return;
-    this.router.navigate(['/pokemon', this.previousPokemonName], { queryParams: { allowEdit: 1 }, fragment: 'test' });
+    this.router.navigate(['/my-pokemon', this.previousPokemonName], {
+      queryParams: { allowEdit: 1 },
+      fragment: 'test',
+    });
   }
 
   goToNextPokemon() {
     if (!this.nextPokemonName) return;
-    this.router.navigate(['/pokemon', this.nextPokemonName], { queryParams: { allowEdit: 1 }, fragment: 'test' });
+    this.router.navigate(['/my-pokemon', this.nextPokemonName], { queryParams: { allowEdit: 1 }, fragment: 'test' });
   }
 }

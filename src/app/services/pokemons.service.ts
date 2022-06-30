@@ -1,35 +1,8 @@
 import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { Pokemon } from '../models/pokemon';
 import { LoggingService } from './logging.service';
-
-export enum PokemonTypeEnum {
-  GRASS = 'plante',
-  FIRE = 'feu',
-  WATER = 'eau',
-  POISON = 'poison',
-  NORMAL = 'normal',
-  FIGHTING = 'combat',
-  FLYING = 'vol',
-  GROUND = 'sol',
-  ROCK = 'roche',
-  BUG = 'insecte',
-  GHOST = 'spectre',
-  STEEL = 'acier',
-  ELECTRIC = 'électrique',
-  PSYCHIC = 'psy',
-  ICE = 'glace',
-  DRAGON = 'dragon',
-  DARK = 'ténèbre',
-  FAIRY = 'fée',
-  SHADOW = 'shadow',
-}
-
-export interface Pokemon {
-  id: number;
-  name: string;
-  type: PokemonTypeEnum;
-  level: number;
-  createdAt: Date;
-}
+import { PokeApiService } from './poke-api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -38,23 +11,19 @@ export class PokemonsService {
   pokemons: Pokemon[] = [];
   isAddingPokemon = false;
 
-  constructor(private loggingService: LoggingService) {
+  constructor(private loggingService: LoggingService, private pokeApiService: PokeApiService) {
     this.loadPokemonListFromStorage();
   }
 
-  addPokemon(pokemonName: string, pokemonType: PokemonTypeEnum | undefined): boolean {
-    if (!pokemonName || !pokemonType) return false;
-    if (this.pokemonExists(pokemonName)) return false;
-    this.pokemons.push({
-      id: this.pokemons.length,
-      name: pokemonName,
-      type: pokemonType,
-      level: Math.round(Math.random() * 100),
-      createdAt: new Date(),
-    });
-    this.storePokemonList();
-    this.loggingService.logItemCreated(pokemonName);
-    return true;
+  getPokemonData(url: string): Observable<any> {
+    // console.log('pokemon :', pokemon);
+    return this.pokeApiService.callPokeApi(url).pipe(
+      map((data) => ({
+        id: data.id,
+        image: data.sprites.other['official-artwork'].front_default,
+        types: data.types,
+      })),
+    );
   }
 
   removePokemon(pokemonName: string, pokemonIndex: number) {
@@ -64,7 +33,6 @@ export class PokemonsService {
   }
 
   pokemonExists(pokemonName: string | undefined): boolean {
-    // eslint-disable-next-line max-len
     return this.pokemons.findIndex((pokemon) => pokemon.name?.toLowerCase() === pokemonName?.toLowerCase()) > -1;
   }
 

@@ -8,15 +8,14 @@ import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PokemonListComponent } from './components/pokemon-list/pokemon-list.component';
-import { PokemonItemComponent } from './components/pokemon-item/pokemon-item.component';
+import { MyPokemonListComponent } from './components/my-pokemon-list/my-pokemon-list.component';
 import { HomeComponent } from './pages/home/home.component';
-import { PokemonComponent } from './pages/pokemon/pokemon.component';
-import { GeneralComponent } from './pages/pokemon/tabs/general/general.component';
-import { StatsComponent } from './pages/pokemon/tabs/stats/stats.component';
-import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.component';
-import { NotFoundComponent } from './pages/pokemon/not-found/not-found.component';
-import { ErrorComponent } from './pages/pokemon/error/error.component';
+import { MyPokemonComponent } from './pages/my-pokemon/my-pokemon.component';
+import { GeneralComponent } from './components/tabs/general/general.component';
+import { StatsComponent } from './components/tabs/stats/stats.component';
+import { EvolutionsComponent } from './components/tabs/evolutions/evolutions.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ErrorComponent } from './components/error/error.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { PokemonTypeFilterPipe } from './pipes/pokemon-type-filter.pipe';
@@ -29,16 +28,17 @@ import { PokedexListComponent } from './components/pokedex-list/pokedex-list.com
 import { PokedexItemComponent } from './components/pokedex-item/pokedex-item.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { MyPokemonItemComponent } from './components/my-pokemon-item/my-pokemon-item.component';
 
 registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
     AppComponent,
-    PokemonListComponent,
-    PokemonItemComponent,
+    MyPokemonListComponent,
+    MyPokemonItemComponent,
     HomeComponent,
-    PokemonComponent,
+    MyPokemonComponent,
     GeneralComponent,
     StatsComponent,
     EvolutionsComponent,
