@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Pokemon } from 'src/app/models/pokemon';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -8,10 +10,10 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 })
 export class PokedexItemComponent implements OnInit {
   @Input()
-  public pokemon!: any;
+  public pokemon!: Pokemon;
   isLoading = true;
 
-  constructor(private pkemonService: PokemonsService) {}
+  constructor(private pokemonService: PokemonsService, private router: Router) {}
 
   ngOnInit() {
     this.getPokemonData();
@@ -19,9 +21,13 @@ export class PokedexItemComponent implements OnInit {
 
   getPokemonData() {
     console.log('this.pokemon :', this.pokemon);
-    this.pkemonService.getPokemonData(this.pokemon.url).subscribe((data) => {
+    this.pokemonService.getPokemonData(this.pokemon.url).subscribe((data) => {
       this.pokemon.data = data;
       this.isLoading = false;
     });
+  }
+
+  goToPokemon() {
+    this.router.navigate([`/pokemon/${this.pokemon.name}`]);
   }
 }

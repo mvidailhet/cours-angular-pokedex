@@ -8,7 +8,8 @@ import { PokeApiService } from './poke-api.service';
   providedIn: 'root',
 })
 export class PokemonsService {
-  pokemons: Pokemon[] = [];
+  myPokemons: Pokemon[] = [];
+  apiPokemons: Pokemon[] = [];
   isAddingPokemon = false;
 
   constructor(private loggingService: LoggingService, private pokeApiService: PokeApiService) {
@@ -16,51 +17,81 @@ export class PokemonsService {
   }
 
   getPokemonData(url: string): Observable<any> {
-    // console.log('pokemon :', pokemon);
     return this.pokeApiService.callPokeApi(url).pipe(
       map((data) => ({
         id: data.id,
         image: data.sprites.other['official-artwork'].front_default,
         types: data.types,
+        name: data.name,
       })),
     );
   }
 
+  fetchPokemonByName(pokemonName: string): Observable<any> {
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+    return this.getPokemonData(url);
+  }
+
+  fetchPokemonById(pokemonIndex: number): Observable<any> {
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}`;
+
+    return this.getPokemonData(url);
+  }
+
   removePokemon(pokemonName: string, pokemonIndex: number) {
-    this.pokemons.splice(pokemonIndex, 1);
+    this.myPokemons.splice(pokemonIndex, 1);
     this.storePokemonList();
     this.loggingService.logItemRemoved(pokemonName);
   }
 
-  pokemonExists(pokemonName: string | undefined): boolean {
-    return this.pokemons.findIndex((pokemon) => pokemon.name?.toLowerCase() === pokemonName?.toLowerCase()) > -1;
+  findPokemonIndexByName(name: string, pokemons: Pokemon[]) {
+    return pokemons.findIndex((pokemon) => pokemon.name === name);
   }
 
-  findPokemonIndexByName(name: string) {
-    return this.pokemons.findIndex((pokemon) => pokemon.name === name);
+  findMyPokemonIndexByName(name: string) {
+    return this.findPokemonIndexByName(name, this.myPokemons);
   }
 
-  getPreviousPokemonName(currentPokemonName: string | undefined): string | undefined {
+  findApiPokemonIndexByName(name: string) {
+    return this.findPokemonIndexByName(name, this.apiPokemons);
+  }
+
+  getPreviousPokemonName(currentPokemonName: string | undefined, pokemons: Pokemon[]): string | undefined {
     if (!currentPokemonName) throw new Error("Can't find Pokemon");
-    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName);
+    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName, pokemons);
     if (pokemonIndex === 0) return undefined;
-    return this.pokemons[pokemonIndex - 1].name;
+    return pokemons[pokemonIndex - 1]?.name;
   }
 
-  getNextPokemonName(currentPokemonName: string | undefined): string | undefined {
+  getPreviousMyPokemonName(myPokemonName: string): string | undefined {
+    return this.getPreviousPokemonName(myPokemonName, this.myPokemons);
+  }
+  getPreviousApiPokemonName(apiPokemonName: string): string | undefined {
+    return this.getPreviousPokemonName(apiPokemonName, this.apiPokemons);
+  }
+
+  getNextPokemonName(currentPokemonName: string | undefined, pokemons: Pokemon[]): string | undefined {
     if (!currentPokemonName) throw new Error("Can't find Pokemon");
-    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName);
-    if (pokemonIndex === this.pokemons.length - 1) return undefined;
-    return this.pokemons[pokemonIndex + 1].name;
+    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName, pokemons);
+    if (pokemonIndex === pokemons.length - 1) return undefined;
+    return pokemons[pokemonIndex + 1]?.name;
+  }
+
+  getNextMyPokemonName(myPokemonName: string): string | undefined {
+    return this.getNextPokemonName(myPokemonName, this.myPokemons);
+  }
+  getNextApiPokemonName(apiPokemonName: string): string | undefined {
+    return this.getNextPokemonName(apiPokemonName, this.apiPokemons);
   }
 
   loadPokemonListFromStorage() {
-    const storagePokemons = localStorage.getItem('pokemons');
+    const storagePokemons = localStorage.getItem('my_pokemons');
     if (!storagePokemons) return;
-    this.pokemons = JSON.parse(storagePokemons);
+    this.myPokemons = JSON.parse(storagePokemons);
   }
 
   storePokemonList() {
-    localStorage.setItem('pokemons', JSON.stringify(this.pokemons));
+    localStorage.setItem('my_pokemons', JSON.stringify(this.myPokemons));
   }
 }

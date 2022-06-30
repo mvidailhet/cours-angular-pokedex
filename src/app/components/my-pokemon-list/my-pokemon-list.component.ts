@@ -15,7 +15,7 @@ export class MyPokemonListComponent {
   pokemons: Pokemon[] = [];
 
   constructor(private pokemonsService: PokemonsService, private router: Router) {
-    this.pokemons = this.pokemonsService.pokemons;
+    this.pokemons = this.pokemonsService.myPokemons;
   }
 
   goToPokemonPage(pokemonIndex: number) {

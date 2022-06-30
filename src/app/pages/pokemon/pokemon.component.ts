@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Pokemon } from 'src/app/models/pokemon';
 import { PokemonsService } from 'src/app/services/pokemons.service';
@@ -11,20 +11,16 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 })
 export class PokemonComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined;
+  currentPokemonName!: string;
+  previousPokemonName: string | undefined;
+  nextPokemonName: string | undefined;
   paramsSubscription: Subscription | undefined;
-  queryParamsSubscription: Subscription | undefined;
-  fragmentSubscription: Subscription | undefined;
+  isLoading = true;
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private pokemonService: PokemonsService,
-    private router: Router,
-  ) {}
+  constructor(private activatedRoute: ActivatedRoute, private pokemonService: PokemonsService) {}
 
   ngOnInit(): void {
     this.paramsSubscription = this.activatedRoute.params.subscribe(this.handleRouteParams);
-    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe(this.handleQueryParams);
-    this.fragmentSubscription = this.activatedRoute.fragment.subscribe(this.handleFragment);
   }
 
   ngOnDestroy(): void {
@@ -35,25 +31,47 @@ export class PokemonComponent implements OnInit, OnDestroy {
   }
 
   handleRouteParams = (params: Params) => {
-    const pokemonName = params.name;
-    console.log('pokemonName :', pokemonName);
-    const pokemonIndex = this.pokemonService.findPokemonIndexByName(pokemonName);
-    this.pokemon = this.pokemonService.pokemons[pokemonIndex];
+    this.currentPokemonName = params.name;
+    if (!this.currentPokemonName) return;
+    this.nextPokemonName = this.pokemonService.getNextApiPokemonName(this.currentPokemonName);
+    this.previousPokemonName = this.pokemonService.getPreviousApiPokemonName(this.currentPokemonName);
+    this.fetchPokemonByName();
   };
 
-  handleQueryParams = (queryParams: Params) => {
-    console.log('query parameters :', queryParams);
-  };
+  fetchPokemonByName() {
+    this.pokemonService.fetchPokemonByName(this.currentPokemonName!).subscribe((data) => {
+      const pokemon: Pokemon = {
+        name: this.currentPokemonName,
+        url: `https://pokeapi.co/api/v2/pokemon/${data.id}`,
+        data,
+      };
+      this.pokemon = pokemon;
+      this.isLoading = false;
+    });
+  }
 
-  handleFragment = (fragment: string | null) => {
-    console.log(`fragment : ${fragment}`);
-  };
+  fetchPokemonById(pokemonIndex: number) {
+    this.pokemonService.fetchPokemonById(pokemonIndex).subscribe((data) => {
+      const pokemon: Pokemon = {
+        name: data.name,
+        url: `https://pokeapi.co/api/v2/pokemon/${data.id}`,
+        data,
+      };
+      this.pokemon = pokemon;
+      this.isLoading = false;
+    });
+  }
 
   goToPreviousPokemon() {
-    console.log('pokedexPrev');
+    const pokemonIndex = this.pokemon?.data.id;
+    if (pokemonIndex === 1 || !pokemonIndex) return;
+    this.fetchPokemonById(pokemonIndex - 1);
   }
 
   goToNextPokemon() {
-    console.log('pokedexNext');
+    const pokemonIndex = this.pokemon?.data.id;
+    if (!pokemonIndex) return;
+
+    this.fetchPokemonById(pokemonIndex + 1);
   }
 }

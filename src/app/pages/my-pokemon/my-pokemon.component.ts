@@ -14,8 +14,6 @@ export class MyPokemonComponent implements OnInit, OnDestroy {
   previousPokemonName: string | undefined;
   nextPokemonName: string | undefined;
   paramsSubscription: Subscription | undefined;
-  queryParamsSubscription: Subscription | undefined;
-  fragmentSubscription: Subscription | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -25,8 +23,7 @@ export class MyPokemonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.paramsSubscription = this.activatedRoute.params.subscribe(this.handleRouteParams);
-    this.queryParamsSubscription = this.activatedRoute.queryParams.subscribe(this.handleQueryParams);
-    this.fragmentSubscription = this.activatedRoute.fragment.subscribe(this.handleFragment);
+    console.log('this.pokemon :', this.pokemon);
   }
 
   ngOnDestroy(): void {
@@ -39,10 +36,10 @@ export class MyPokemonComponent implements OnInit, OnDestroy {
   handleRouteParams = (params: Params) => {
     const pokemonName = params.name;
     console.log('pokemonName :', pokemonName);
-    const pokemonIndex = this.pokemonService.findPokemonIndexByName(pokemonName);
-    this.nextPokemonName = this.pokemonService.getNextPokemonName(pokemonName);
-    this.previousPokemonName = this.pokemonService.getPreviousPokemonName(pokemonName);
-    this.pokemon = this.pokemonService.pokemons[pokemonIndex];
+    const pokemonIndex = this.pokemonService.findApiPokemonIndexByName(pokemonName);
+    this.nextPokemonName = this.pokemonService.getNextApiPokemonName(pokemonName);
+    this.previousPokemonName = this.pokemonService.getPreviousApiPokemonName(pokemonName);
+    this.pokemon = this.pokemonService.apiPokemons[pokemonIndex];
   };
 
   handleQueryParams = (queryParams: Params) => {

@@ -4,11 +4,8 @@
     <app-loader [isLoading]="isLoading" [isBigLoader]="true"></app-loader>
     <ng-container *ngIf="!isLoading">
       <div class="row">
-        <app-pokedex-item
-          class="col-12 col-md-4"
-          *ngFor="let pokemon of pokemons"
-          [pokemon]="pokemon"
-        ></app-pokedex-item>
+        <app-pokedex-item class="col-12 col-md-4" *ngFor="let pokemon of pokemons" [pokemon]="pokemon">
+        </app-pokedex-item>
       </div>
     </ng-container>
   </div>
