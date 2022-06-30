@@ -38,7 +38,10 @@
         "object-curly-newline": "off",
         "@angular-eslint/no-input-rename": "off",
         "class-methods-use-this": "off",
-        "max-len": "off"
+        "max-len": "off",
+        "implicit-arrow-linebreak": "off",
+        "function-paren-newline": "off",
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
       }
     },
     {
