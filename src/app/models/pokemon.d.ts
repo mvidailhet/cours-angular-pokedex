@@ -1,12 +1,24 @@
+export interface PokemonsApiList {
+  count: number;
+  next: string;
+  previous: null;
+  results: PokemonApiItem[];
+}
+
+export interface PokemonApiItem {
+  name: string;
+  url: string;
+}
+
 export interface Pokemon {
   name: string;
   url: string;
-  data: PokemonData;
+  details: PokemonDetails;
 }
 
-export interface PokemonData {
+export interface PokemonDetails {
   id: number;
-  image: PokemonOfficialArtwork;
+  image: string;
   types: PokemonType[];
 }
 
@@ -15,7 +27,7 @@ export interface PokemonType {
   type: PokeApiEndpoint;
 }
 
-export interface PokemonOfficialArtwork {
+export interface OfficialArtwork {
   front_default: string;
 }
 
