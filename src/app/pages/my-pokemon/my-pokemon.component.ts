@@ -11,9 +11,11 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 })
 export class MyPokemonComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined;
+  currentPokemonName: string | undefined;
   previousPokemonName: string | undefined;
   nextPokemonName: string | undefined;
   paramsSubscription: Subscription | undefined;
+  isLoading = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -23,7 +25,6 @@ export class MyPokemonComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.paramsSubscription = this.activatedRoute.params.subscribe(this.handleRouteParams);
-    console.log('this.pokemon :', this.pokemon);
   }
 
   ngOnDestroy(): void {
@@ -34,12 +35,11 @@ export class MyPokemonComponent implements OnInit, OnDestroy {
   }
 
   handleRouteParams = (params: Params) => {
-    const pokemonName = params.name;
-    console.log('pokemonName :', pokemonName);
-    const pokemonIndex = this.pokemonService.findApiPokemonIndexByName(pokemonName);
-    this.nextPokemonName = this.pokemonService.getNextApiPokemonName(pokemonName);
-    this.previousPokemonName = this.pokemonService.getPreviousApiPokemonName(pokemonName);
-    this.pokemon = this.pokemonService.apiPokemons[pokemonIndex];
+    this.currentPokemonName = params.name;
+    if (!this.currentPokemonName) return;
+    this.previousPokemonName = this.pokemonService.getPreviousMyPokemonName(this.currentPokemonName);
+    this.nextPokemonName = this.pokemonService.getNextMyPokemonName(this.currentPokemonName);
+    this.fetchCurrentPokemon();
   };
 
   handleQueryParams = (queryParams: Params) => {
@@ -50,14 +50,20 @@ export class MyPokemonComponent implements OnInit, OnDestroy {
     console.log(`fragment : ${fragment}`);
   };
 
+  fetchCurrentPokemon() {
+    if (!this.currentPokemonName) return;
+    this.pokemonService.fetchPokemonByName(this.currentPokemonName).subscribe((pokemon: Pokemon) => {
+      this.pokemon = pokemon;
+      this.isLoading = false;
+    });
+  }
+
   goToPreviousPokemon() {
-    console.log('goToPreviousPokemon');
     if (!this.previousPokemonName) return;
     this.router.navigate(['/my-pokemon', this.previousPokemonName]);
   }
 
   goToNextPokemon() {
-    console.log('goToNextPokemon');
     if (!this.nextPokemonName) return;
     this.router.navigate(['/my-pokemon', this.nextPokemonName]);
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Pokemon, PokemonData } from '../models/pokemon';
+import { ApiPokemonResponse } from '../models/api-response';
+import { Pokemon } from '../models/pokemon';
 import { LoggingService } from './logging.service';
 import { PokeApiService } from './poke-api.service';
 
@@ -9,60 +10,56 @@ import { PokeApiService } from './poke-api.service';
 })
 export class PokemonsService {
   myPokemons: Pokemon[] = [];
+  apiPokemons: Pokemon[] = [];
   isAddingPokemon = false;
 
   constructor(private loggingService: LoggingService, private pokeApiService: PokeApiService) {
-    this.loadPokemonListFromStorage();
+    this.loadPokemonsApiListFromStorage();
   }
 
-  getPokemonData(url: string): Observable<PokemonData> {
+  fetchPokemon(url: string): Observable<Pokemon> {
     return this.pokeApiService.callPokeApi(url).pipe(
-      map((data) => ({
-        id: data.id,
-        image: data.sprites.other['official-artwork'].front_default,
-        types: data.types,
-        name: data.name,
-      })),
-    );
-  }
-
-  fetchPokemonByName(pokemonName: string): Observable<any> {
-    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
-    return this.getPokemonData(url).pipe(
-      map((data: PokemonData) => {
-        const pokemon: Pokemon = {
-          name: pokemonName,
-          url: `https://pokeapi.co/api/v2/pokemon/${data.id}`,
-          data,
+      map((data: ApiPokemonResponse) => {
+        const newData = {
+          name: data.name,
+          url,
+          details: {
+            id: data.id,
+            image: data.sprites.other!['official-artwork'].front_default,
+            types: data.types,
+          },
         };
-        return pokemon;
+
+        return newData;
       }),
     );
   }
 
-  fetchPokemonById(pokemonIndex: number): Observable<any> {
+  fetchPokemonByName(pokemonName: string): Observable<Pokemon> {
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
+
+    return this.fetchPokemon(url);
+  }
+
+  fetchPokemonById(pokemonIndex: number): Observable<Pokemon> {
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}`;
 
-    return this.getPokemonData(url);
+    return this.fetchPokemon(url);
   }
 
   removePokemon(pokemonName: string, pokemonIndex: number) {
     this.myPokemons.splice(pokemonIndex, 1);
-    this.storePokemonList();
+    this.storePokemonsApiList();
     this.loggingService.logItemRemoved(pokemonName);
   }
 
-  findPokemonIndexByName(name: string, pokemons: Pokemon[]) {
-    return pokemons.findIndex((pokemon) => pokemon.name === name);
-  }
-
   findMyPokemonIndexByName(name: string) {
-    return this.findPokemonIndexByName(name, this.myPokemons);
+    return this.myPokemons.findIndex((pokemon) => pokemon.name === name);
   }
 
   getPreviousPokemonName(currentPokemonName: string | undefined, pokemons: Pokemon[]): string | undefined {
     if (!currentPokemonName) throw new Error("Can't find Pokemon");
-    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName, pokemons);
+    const pokemonIndex = pokemons.findIndex((pokemon) => pokemon.name === currentPokemonName);
     if (pokemonIndex === 0) return undefined;
     return pokemons[pokemonIndex - 1]?.name;
   }
@@ -71,9 +68,14 @@ export class PokemonsService {
     return this.getPreviousPokemonName(myPokemonName, this.myPokemons);
   }
 
+  getPreviousApiPokemonName(apiPokemonName: string): string | undefined {
+    console.log('prev');
+    return this.getPreviousPokemonName(apiPokemonName, this.apiPokemons);
+  }
+
   getNextPokemonName(currentPokemonName: string | undefined, pokemons: Pokemon[]): string | undefined {
     if (!currentPokemonName) throw new Error("Can't find Pokemon");
-    const pokemonIndex = this.findPokemonIndexByName(currentPokemonName, pokemons);
+    const pokemonIndex = pokemons.findIndex((pokemon) => pokemon.name === currentPokemonName);
     if (pokemonIndex === pokemons.length - 1) return undefined;
     return pokemons[pokemonIndex + 1]?.name;
   }
@@ -82,13 +84,18 @@ export class PokemonsService {
     return this.getNextPokemonName(myPokemonName, this.myPokemons);
   }
 
-  loadPokemonListFromStorage() {
+  getNextApiPokemonName(apiPokemonName: string): string | undefined {
+    console.log('next');
+    return this.getNextPokemonName(apiPokemonName, this.apiPokemons);
+  }
+
+  loadPokemonsApiListFromStorage() {
     const storagePokemons = localStorage.getItem('my_pokemons');
     if (!storagePokemons) return;
     this.myPokemons = JSON.parse(storagePokemons);
   }
 
-  storePokemonList() {
+  storePokemonsApiList() {
     localStorage.setItem('my_pokemons', JSON.stringify(this.myPokemons));
   }
 }

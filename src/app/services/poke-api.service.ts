@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap, Observable, of, throwError, Subject, ReplaySubject } from 'rxjs';
-import { Pokemon } from '../models/pokemon';
+import { PokemonApiItem, PokemonsApiList } from '../models/pokemon';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ export class PokeApiService {
   nbPokemons: number = 21;
   // On crée les sujets que l'on souhaite que nos observables surveillent
   urlPokemons = new Subject<any>();
-  pokemons = new Subject<Pokemon[]>();
+  pokemons = new Subject<PokemonApiItem[]>();
   totalPages = new ReplaySubject<number>(1);
 
   constructor(private httpClient: HttpClient) {
@@ -26,7 +26,7 @@ export class PokeApiService {
     );
   }
 
-  fetchPokemons(pageIndex: number = 0): Observable<any> {
+  fetchPokemons(pageIndex: number = 0): Observable<PokemonsApiList> {
     let offset: number | undefined;
 
     if (pageIndex !== 0) {
@@ -36,14 +36,12 @@ export class PokeApiService {
     const url = `https://pokeapi.co/api/v2/pokemon?${offset ? `offset=${offset}&` : ''}limit=${this.nbPokemons}`;
 
     return this.callPokeApi(url).pipe(
-      tap((response) => {
-        console.log('response :', response);
-
+      tap((pokemonList: PokemonsApiList) => {
         // On met à jour notre sujet
-        this.pokemons.next(response.results);
+        this.pokemons.next(pokemonList.results);
         this.urlPokemons.next({
-          next: response.next,
-          previous: response.previous,
+          next: pokemonList.next,
+          previous: pokemonList.previous,
         });
       }),
     );

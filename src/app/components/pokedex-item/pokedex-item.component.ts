@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Pokemon } from 'src/app/models/pokemon';
+import { Pokemon, PokemonApiItem } from 'src/app/models/pokemon';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -10,24 +10,28 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 })
 export class PokedexItemComponent implements OnInit {
   @Input()
+  public pokemonApiItem!: PokemonApiItem;
   public pokemon!: Pokemon;
   isLoading = true;
 
   constructor(private pokemonService: PokemonsService, private router: Router) {}
 
   ngOnInit() {
-    this.getPokemonData();
+    this.fetchPokemon();
   }
 
-  getPokemonData() {
-    console.log('this.pokemon :', this.pokemon);
-    this.pokemonService.getPokemonData(this.pokemon.url).subscribe((data) => {
-      this.pokemon.data = data;
+  fetchPokemon() {
+    this.pokemonService.fetchPokemon(this.pokemonApiItem.url).subscribe((data) => {
+      this.pokemon = {
+        name: this.pokemonApiItem.name,
+        url: this.pokemonApiItem.url,
+        details: data.details,
+      };
       this.isLoading = false;
     });
   }
 
   goToPokemon() {
-    this.router.navigate([`/pokemon/${this.pokemon.name}`]);
+    this.router.navigate([`/pokemon/${this.pokemonApiItem.name}`]);
   }
 }

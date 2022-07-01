@@ -12,6 +12,8 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 export class PokemonComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined;
   currentPokemonName: string | undefined;
+  previousPokemonName: string | undefined;
+  nextPokemonName: string | undefined;
   paramsSubscription: Subscription | undefined;
   isLoading = true;
 
@@ -31,6 +33,8 @@ export class PokemonComponent implements OnInit, OnDestroy {
   handleRouteParams = (params: Params) => {
     this.currentPokemonName = params.name;
     if (!this.currentPokemonName) return;
+    this.nextPokemonName = this.pokemonService.getNextApiPokemonName(this.currentPokemonName);
+    this.previousPokemonName = this.pokemonService.getPreviousApiPokemonName(this.currentPokemonName);
     this.fetchCurrentPokemon();
   };
 
@@ -43,25 +47,21 @@ export class PokemonComponent implements OnInit, OnDestroy {
   }
 
   fetchPokemonById(pokemonIndex: number) {
-    this.pokemonService.fetchPokemonById(pokemonIndex).subscribe((data) => {
-      const pokemon: Pokemon = {
-        name: data.name,
-        url: `https://pokeapi.co/api/v2/pokemon/${data.id}`,
-        data,
-      };
+    this.pokemonService.fetchPokemonById(pokemonIndex).subscribe((pokemon: Pokemon) => {
       this.pokemon = pokemon;
       this.isLoading = false;
     });
   }
 
   goToPreviousPokemon() {
-    const pokemonIndex = this.pokemon?.data.id;
+    const pokemonIndex = this.pokemon?.details.id;
     if (pokemonIndex === 1 || !pokemonIndex) return;
+
     this.fetchPokemonById(pokemonIndex - 1);
   }
 
   goToNextPokemon() {
-    const pokemonIndex = this.pokemon?.data.id;
+    const pokemonIndex = this.pokemon?.details.id;
     if (!pokemonIndex) return;
 
     this.fetchPokemonById(pokemonIndex + 1);

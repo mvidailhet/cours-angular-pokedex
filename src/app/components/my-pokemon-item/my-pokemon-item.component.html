@@ -2,9 +2,9 @@
   <div class="card-body row">
     <div class="col">
       <img
-        *ngIf="pokemon.data?.image; else noImage"
+        *ngIf="pokemon.details?.image; else noImage"
         class="col card-image me-3"
-        [src]="pokemon.data?.image"
+        [src]="pokemon.details?.image"
         alt="..."
       />
       <ng-template #noImage>
@@ -27,7 +27,7 @@
     <div class="col d-flex align-items-center">
       <span
         class="badge me-2 badge-secondary pokemon-background-type-{{ type.type.name | uppercase }}"
-        *ngFor="let type of pokemon.data?.types"
+        *ngFor="let type of pokemon.details?.types"
         >{{ type.type.name | titlecase }}</span
       >
     </div>

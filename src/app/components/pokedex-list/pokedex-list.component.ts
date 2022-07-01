@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { PokemonApiItem } from 'src/app/models/pokemon';
 import { PokeApiService } from 'src/app/services/poke-api.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { PokeApiService } from 'src/app/services/poke-api.service';
   styleUrls: ['./pokedex-list.component.scss'],
 })
 export class PokedexListComponent implements OnInit, OnDestroy {
-  pokemons: any[] = [];
+  pokemonsApiList: PokemonApiItem[] = [];
   isLoading = true;
   // On crée l'oservable qui sera chargée de surveiller notre sujet
   pokemons$ = this.pokeApiService.pokemons.asObservable();
@@ -25,8 +26,8 @@ export class PokedexListComponent implements OnInit, OnDestroy {
   }
 
   // On s'abonne à l'observable puis on réalise les opérations que l'on désire avec les données reçues
-  pokemonsSubscription = this.pokemons$.subscribe((newPokemons) => {
-    this.pokemons = newPokemons;
+  pokemonsSubscription = this.pokemons$.subscribe((newPokemonsApiList) => {
+    this.pokemonsApiList = newPokemonsApiList;
     this.isLoading = false;
   });
 }

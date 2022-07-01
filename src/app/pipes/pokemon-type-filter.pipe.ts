@@ -9,7 +9,7 @@ export class PokemonTypeFilterPipe implements PipeTransform {
   transform(pokemons: Pokemon[], type: PokemonType | undefined): Pokemon[] {
     if (!pokemons || !type || type.type.name === '') return pokemons;
     return pokemons.filter((pokemon) =>
-      pokemon.data.types.map((pokemonType) => pokemonType.type.name === type.type.name),
+      pokemon.details.types.map((pokemonType) => pokemonType.type.name === type.type.name),
     );
   }
 }

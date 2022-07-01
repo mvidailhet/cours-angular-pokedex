@@ -1,14 +1,14 @@
 <a class="pokemon-link" (click)="goToPokemon()">
   <div class="card bg-light mb-4 text-center">
-    <div class="card-header">#{{ pokemon.data?.id }} {{ pokemon.name | titlecase }}</div>
+    <div class="card-header">#{{ pokemon?.details?.id }} {{ pokemon?.name | titlecase }}</div>
     <div class="card-body">
       <app-loader [isLoading]="isLoading"></app-loader>
       <ng-container *ngIf="!isLoading">
         <img
-          *ngIf="pokemon.data?.image; else noImage"
+          *ngIf="pokemon?.details?.image; else noImage"
           class="col card-image"
-          [src]="pokemon.data?.image"
-          alt="Image de {{ pokemon.name | titlecase }}"
+          [src]="pokemon?.details?.image"
+          alt="Image de {{ pokemon?.name | titlecase }}"
         />
 
         <ng-template #noImage>
@@ -26,9 +26,9 @@
             </svg>
           </div>
         </ng-template>
-        <div class="pokemon-types mb-4" *ngIf="pokemon.data?.types">
+        <div class="pokemon-types mb-4" *ngIf="pokemon?.details?.types">
           <span
-            *ngFor="let type of pokemon.data?.types"
+            *ngFor="let type of pokemon?.details?.types"
             class="badge py-2 px-3 mx-1 pokemon-background-type-{{ type.type.name | uppercase }}"
             >{{ type.type.name | titlecase }}</span
           >
