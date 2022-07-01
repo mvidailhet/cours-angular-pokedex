@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Pokemon } from '../models/pokemon';
+import { Pokemon, PokemonData } from '../models/pokemon';
 import { LoggingService } from './logging.service';
 import { PokeApiService } from './poke-api.service';
 
@@ -9,14 +9,13 @@ import { PokeApiService } from './poke-api.service';
 })
 export class PokemonsService {
   myPokemons: Pokemon[] = [];
-  apiPokemons: Pokemon[] = [];
   isAddingPokemon = false;
 
   constructor(private loggingService: LoggingService, private pokeApiService: PokeApiService) {
     this.loadPokemonListFromStorage();
   }
 
-  getPokemonData(url: string): Observable<any> {
+  getPokemonData(url: string): Observable<PokemonData> {
     return this.pokeApiService.callPokeApi(url).pipe(
       map((data) => ({
         id: data.id,
@@ -29,8 +28,16 @@ export class PokemonsService {
 
   fetchPokemonByName(pokemonName: string): Observable<any> {
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
-
-    return this.getPokemonData(url);
+    return this.getPokemonData(url).pipe(
+      map((data: PokemonData) => {
+        const pokemon: Pokemon = {
+          name: pokemonName,
+          url: `https://pokeapi.co/api/v2/pokemon/${data.id}`,
+          data,
+        };
+        return pokemon;
+      }),
+    );
   }
 
   fetchPokemonById(pokemonIndex: number): Observable<any> {
@@ -53,10 +60,6 @@ export class PokemonsService {
     return this.findPokemonIndexByName(name, this.myPokemons);
   }
 
-  findApiPokemonIndexByName(name: string) {
-    return this.findPokemonIndexByName(name, this.apiPokemons);
-  }
-
   getPreviousPokemonName(currentPokemonName: string | undefined, pokemons: Pokemon[]): string | undefined {
     if (!currentPokemonName) throw new Error("Can't find Pokemon");
     const pokemonIndex = this.findPokemonIndexByName(currentPokemonName, pokemons);
@@ -66,9 +69,6 @@ export class PokemonsService {
 
   getPreviousMyPokemonName(myPokemonName: string): string | undefined {
     return this.getPreviousPokemonName(myPokemonName, this.myPokemons);
-  }
-  getPreviousApiPokemonName(apiPokemonName: string): string | undefined {
-    return this.getPreviousPokemonName(apiPokemonName, this.apiPokemons);
   }
 
   getNextPokemonName(currentPokemonName: string | undefined, pokemons: Pokemon[]): string | undefined {
@@ -80,9 +80,6 @@ export class PokemonsService {
 
   getNextMyPokemonName(myPokemonName: string): string | undefined {
     return this.getNextPokemonName(myPokemonName, this.myPokemons);
-  }
-  getNextApiPokemonName(apiPokemonName: string): string | undefined {
-    return this.getNextPokemonName(apiPokemonName, this.apiPokemons);
   }
 
   loadPokemonListFromStorage() {

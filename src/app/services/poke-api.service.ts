@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, tap, Observable, of, throwError, Subject } from 'rxjs';
+import { catchError, tap, Observable, of, throwError, Subject, ReplaySubject } from 'rxjs';
+import { Pokemon } from '../models/pokemon';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +10,8 @@ export class PokeApiService {
   nbPokemons: number = 21;
   // On crée les sujets que l'on souhaite que nos observables surveillent
   urlPokemons = new Subject<any>();
-  pokemons = new Subject<any[]>();
-  totalPages = new Subject<number>();
+  pokemons = new Subject<Pokemon[]>();
+  totalPages = new ReplaySubject<number>(1);
 
   constructor(private httpClient: HttpClient) {
     this.getTotalPages().subscribe();

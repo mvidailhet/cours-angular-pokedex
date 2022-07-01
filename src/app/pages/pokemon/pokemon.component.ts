@@ -11,9 +11,7 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 })
 export class PokemonComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined;
-  currentPokemonName!: string;
-  previousPokemonName: string | undefined;
-  nextPokemonName: string | undefined;
+  currentPokemonName: string | undefined;
   paramsSubscription: Subscription | undefined;
   isLoading = true;
 
@@ -33,18 +31,12 @@ export class PokemonComponent implements OnInit, OnDestroy {
   handleRouteParams = (params: Params) => {
     this.currentPokemonName = params.name;
     if (!this.currentPokemonName) return;
-    this.nextPokemonName = this.pokemonService.getNextApiPokemonName(this.currentPokemonName);
-    this.previousPokemonName = this.pokemonService.getPreviousApiPokemonName(this.currentPokemonName);
-    this.fetchPokemonByName();
+    this.fetchCurrentPokemon();
   };
 
-  fetchPokemonByName() {
-    this.pokemonService.fetchPokemonByName(this.currentPokemonName!).subscribe((data) => {
-      const pokemon: Pokemon = {
-        name: this.currentPokemonName,
-        url: `https://pokeapi.co/api/v2/pokemon/${data.id}`,
-        data,
-      };
+  fetchCurrentPokemon() {
+    if (!this.currentPokemonName) return;
+    this.pokemonService.fetchPokemonByName(this.currentPokemonName).subscribe((pokemon: Pokemon) => {
       this.pokemon = pokemon;
       this.isLoading = false;
     });
