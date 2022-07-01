@@ -1,0 +1,8 @@
+.card-image {
+  display: inline-block;
+  width: 50%;
+
+  &.small-pokemon-image {
+    width: 20%;
+  }
+}

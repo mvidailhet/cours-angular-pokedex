@@ -31,6 +31,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
 import { MyPokemonItemComponent } from './components/my-pokemon-item/my-pokemon-item.component';
 import { PokemonComponent } from './pages/pokemon/pokemon.component';
 import { PokemonNavigationComponent } from './components/pokemon-navigation/pokemon-navigation.component';
+import { PokemonImageComponent } from './components/pokemon-image/pokemon-image.component';
+import { PokemonTypeComponent } from './components/pokemon-type/pokemon-type.component';
 
 registerLocaleData(localeFr);
 
@@ -60,6 +62,8 @@ registerLocaleData(localeFr);
     PaginationComponent,
     PokemonComponent,
     PokemonNavigationComponent,
+    PokemonImageComponent,
+    PokemonTypeComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],
