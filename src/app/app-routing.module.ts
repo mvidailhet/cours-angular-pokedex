@@ -33,8 +33,13 @@ const routes: Routes = [
     component: CreateUserTemplateDrivenComponent,
   },
   {
-    path: 'pokedex/:page',
+    path: 'pokedex/page/:page',
     component: PokedexComponent,
+  },
+  {
+    path: 'pokedex',
+    redirectTo: 'pokedex/page/1',
+    pathMatch: 'full',
   },
   {
     path: 'pokemon/:name',

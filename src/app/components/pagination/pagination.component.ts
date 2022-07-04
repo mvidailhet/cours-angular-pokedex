@@ -41,20 +41,20 @@ export class PaginationComponent implements OnDestroy {
 
   goToPreviousPokemons() {
     if (!this.urlPreviousPokemons || this.urlPreviousPokemons === null) return;
-    this.router.navigate(['/pokedex', this.currentPage! - 1]);
+    this.router.navigate(['/pokedex/page', this.currentPage! - 1]);
     this.pokeApiService.callPokeApi(this.urlPreviousPokemons).subscribe();
   }
 
   goToNextPokemons() {
     if (!this.urlNextPokemons || this.urlNextPokemons === null) return;
-    this.router.navigate(['/pokedex', this.currentPage! + 1]);
+    this.router.navigate(['/pokedex/page', this.currentPage! + 1]);
     this.pokeApiService.callPokeApi(this.urlNextPokemons).subscribe();
   }
 
   goToPagePokemons(pageIndex: number) {
     this.currentPage = pageIndex + 1;
 
-    this.router.navigate(['/pokedex', this.currentPage]);
+    this.router.navigate(['/pokedex/page', this.currentPage]);
     this.pokeApiService.fetchPokemons(pageIndex).subscribe();
   }
 
