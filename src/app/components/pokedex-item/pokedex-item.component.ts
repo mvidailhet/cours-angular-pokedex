@@ -21,12 +21,8 @@ export class PokedexItemComponent implements OnInit {
   }
 
   fetchPokemon() {
-    this.pokemonService.fetchPokemon(this.pokemonApiItem.url).subscribe((data) => {
-      this.pokemon = {
-        name: this.pokemonApiItem.name,
-        url: this.pokemonApiItem.url,
-        details: data.details,
-      };
+    this.pokemonService.fetchPokemon(this.pokemonApiItem.url).subscribe((pokemon: Pokemon) => {
+      this.pokemon = pokemon;
       this.isLoading = false;
     });
   }
