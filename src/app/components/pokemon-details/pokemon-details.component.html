@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-sm">
-    <h2 class="my-5">#{{ pokemon?.details?.id }} {{ pokemon?.name | titlecase }}</h2>
+    <h2 class="my-5 pokemon-name">#{{ pokemon?.details?.id }} {{ pokemon?.name | titlecase }}</h2>
   </div>
-  <div class="col-sm">
-    <app-pokemon-image [isLoading]="isLoading" [pokemon]="pokemon" class="m-auto"></app-pokemon-image>
+  <div class="image-container col-sm">
+    <app-pokemon-image [isLoading]="isLoading" [pokemon]="pokemon"></app-pokemon-image>
   </div>
 </div>
 <nav class="nav nav-tabs">
