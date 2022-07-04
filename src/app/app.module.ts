@@ -32,8 +32,8 @@ import { MyPokemonItemComponent } from './components/my-pokemon-item/my-pokemon-
 import { PokemonComponent } from './pages/pokemon/pokemon.component';
 import { PokemonNavigationComponent } from './components/pokemon-navigation/pokemon-navigation.component';
 import { PokemonImageComponent } from './components/pokemon-image/pokemon-image.component';
-import { PokemonTypeComponent } from './components/pokemon-type/pokemon-type.component';
 import { PokemonDetailsComponent } from './components/pokemon-details/pokemon-details.component';
+import { PokemonTypesComponent } from './components/pokemon-types/pokemon-types.component';
 
 registerLocaleData(localeFr);
 
@@ -64,8 +64,8 @@ registerLocaleData(localeFr);
     PokemonComponent,
     PokemonNavigationComponent,
     PokemonImageComponent,
-    PokemonTypeComponent,
     PokemonDetailsComponent,
+    PokemonTypesComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   providers: [{ provide: LOCALE_ID, useValue: 'fr' }],

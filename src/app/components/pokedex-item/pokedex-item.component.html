@@ -5,14 +5,7 @@
       <app-loader [isLoading]="isLoading"></app-loader>
       <ng-container *ngIf="!isLoading">
         <app-pokemon-image [isLoading]="isLoading" [pokemon]="pokemon"></app-pokemon-image>
-        <div class="pokemon-types mb-4">
-          <ng-container *ngFor="let type of pokemon.details?.types; let index = index">
-            <app-pokemon-type
-              [type]="type.type.name"
-              [isLast]="index !== pokemon.details?.types?.length! - 1"
-            ></app-pokemon-type>
-          </ng-container>
-        </div>
+        <app-pokemon-types class="pokemon-types mb-4" [types]="pokemon.details?.types"></app-pokemon-types>
       </ng-container>
     </div>
   </div>

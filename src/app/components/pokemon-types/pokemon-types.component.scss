@@ -11,3 +11,13 @@
     }
   }
 }
+
+:host {
+  display: block;
+}
+
+.pokemon-type {
+  &:last-child {
+    margin-right: 0 !important;
+  }
+}

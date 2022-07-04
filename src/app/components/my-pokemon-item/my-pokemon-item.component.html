@@ -4,14 +4,10 @@
       <app-pokemon-image [isLoading]="isLoading" [pokemon]="pokemon" [isSmall]="true"></app-pokemon-image>
       <span class="fw-bold">{{ pokemon.name | titlecase }}</span>
     </div>
-    <div class="col d-flex justify-content-center align-items-center">
-      <ng-container *ngFor="let type of pokemon.details?.types; let index = index">
-        <app-pokemon-type
-          [type]="type.type.name"
-          [isLast]="index !== pokemon?.details?.types?.length! - 1"
-        ></app-pokemon-type>
-      </ng-container>
-    </div>
+    <app-pokemon-types
+      class="pokemon-types col d-flex justify-content-center align-items-center"
+      [types]="pokemon.details?.types"
+    ></app-pokemon-types>
     <!-- <div class="col">
       {{ pokemon.createdAt | date: 'fullDate':'':'fr-FR' | titlecase }}
     </div> -->
