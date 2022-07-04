@@ -1,13 +1,13 @@
 <img
   *ngIf="pokemon?.details?.image; else noImage"
-  class="col card-image"
+  class="col card-image mx-auto"
   [ngClass]="{ 'me-3 small-pokemon-image': isSmall, 'm-3': !isSmall }"
   [src]="pokemon?.details?.image"
   alt="Image de {{ pokemon?.name | titlecase }}"
 />
 
 <ng-template #noImage>
-  <div class="col card-image" [ngClass]="{ 'me-3 small-pokemon-image': isSmall, 'm-3': !isSmall }">
+  <div class="col card-image mx-auto" [ngClass]="{ 'me-3 small-pokemon-image': isSmall, 'm-3': !isSmall }">
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
       <path

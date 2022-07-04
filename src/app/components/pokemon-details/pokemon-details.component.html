@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-sm">
+    <h2 class="my-5">#{{ pokemon?.details?.id }} {{ pokemon?.name | titlecase }}</h2>
+  </div>
+  <div class="col-sm">
+    <app-pokemon-image [isLoading]="isLoading" [pokemon]="pokemon" class="m-auto"></app-pokemon-image>
+  </div>
+</div>
+<nav class="nav nav-tabs">
+  <a class="nav-link active" routerLink="general" routerLinkActive="active" queryParamsHandling="merge">General</a>
+  <a class="nav-link" routerLink="stats" routerLinkActive="active" queryParamsHandling="merge">Stats</a>
+  <a class="nav-link" routerLink="evolutions" routerLinkActive="active" queryParamsHandling="merge">Evolutions</a>
+</nav>
+
+<div class="p-3">Onglet</div>
