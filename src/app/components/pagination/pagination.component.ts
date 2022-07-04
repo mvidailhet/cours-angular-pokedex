@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Memoize } from 'src/app/decorators/memoize';
 import { PokeApiService } from 'src/app/services/poke-api.service';
 
 @Component({
@@ -34,7 +35,7 @@ export class PaginationComponent implements OnDestroy {
 
   totalPagesSubscription = this.totalPages$.subscribe((totalPages) => {
     this.totalPages = totalPages;
-    this.getPage();
+    this.createPages();
     this.isReady = (!Number.isNaN(this.totalPages) || this.totalPages !== undefined) && this.pages.length !== 0;
     if (!this.isReady) console.error('Error: An error occured while creating the pagination');
   });
@@ -58,9 +59,19 @@ export class PaginationComponent implements OnDestroy {
     this.pokeApiService.fetchPokemons(pageIndex).subscribe();
   }
 
-  getPage() {
+  createPages() {
     for (let index = 0; index < this.totalPages; index++) {
       this.pages[index] = index + 1;
     }
+  }
+
+  @Memoize()
+  isPaginationItemVisible(index: number, currentPage: number | undefined, totalPages: number) {
+    if (!currentPage) return false;
+    const indexIsNotFirstOrLast = index > 0 && index < totalPages - 1;
+    const indexIsIn3FirstPages = currentPage <= 3 && index <= 2;
+    const indexIsIn3LastPages = currentPage >= totalPages - 2 && index >= totalPages - 3;
+    const indexIsNextToCurrentPage = index >= currentPage - 2 && index <= currentPage;
+    return indexIsNotFirstOrLast && (indexIsIn3FirstPages || indexIsIn3LastPages || indexIsNextToCurrentPage);
   }
 }

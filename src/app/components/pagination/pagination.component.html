@@ -21,20 +21,14 @@
       <li
         class="page-item"
         [ngClass]="{ active: index + 1 === currentPage }"
-        *ngIf="
-          index > 0 &&
-          index < totalPages - 1 &&
-          ((currentPage! <= 3 && index <= 2) ||
-            (currentPage! >= totalPages - 2 && index >= totalPages - 4) ||
-            (index >= currentPage! - 2 && index <= currentPage!))
-        "
+        *ngIf="isPaginationItemVisible(index, currentPage, totalPages)"
       >
         <a class="page-link" (click)="goToPagePokemons(index)">{{ index + 1 }}</a>
       </li>
     </ng-container>
 
     <!-- Affiche '...' la page courante est à plus de 3 pages de la dernière -->
-    <ng-container *ngIf="currentPage! < totalPages - 3">
+    <ng-container *ngIf="currentPage! <= totalPages - 3">
       <li class="page-item disabled"><span class="page-link">...</span></li>
     </ng-container>
 
