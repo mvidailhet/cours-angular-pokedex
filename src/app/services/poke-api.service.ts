@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, tap, Observable, of, throwError, Subject, ReplaySubject } from 'rxjs';
+import { catchError, tap, Observable, of, throwError, Subject } from 'rxjs';
 import { PokemonApiItem, PokemonsApiList } from '../models/pokemon';
 
 @Injectable({
@@ -9,13 +9,12 @@ import { PokemonApiItem, PokemonsApiList } from '../models/pokemon';
 export class PokeApiService {
   nbPokemons: number = 21;
   // On crée les sujets que l'on souhaite que nos observables surveillent
-  urlPokemons = new Subject<any>();
+  paginationInfo = new Subject<any>();
   pokemons = new Subject<PokemonApiItem[]>();
-  totalPages = new ReplaySubject<number>(1);
+  // On crée l'oservables qui seront chargées de surveiller nos sujets
+  paginationInfo$ = this.paginationInfo.asObservable();
 
-  constructor(private httpClient: HttpClient) {
-    this.getTotalPages().subscribe();
-  }
+  constructor(private httpClient: HttpClient) {}
 
   callPokeApi(url: string): Observable<any> {
     return this.httpClient.get<any>(url).pipe(
@@ -37,23 +36,14 @@ export class PokeApiService {
 
     return this.callPokeApi(url).pipe(
       tap((pokemonList: PokemonsApiList) => {
-        // On met à jour notre sujet
-        this.pokemons.next(pokemonList.results);
-        this.urlPokemons.next({
+        const newPaginationInfo = {
           next: pokemonList.next,
           previous: pokemonList.previous,
-        });
-      }),
-    );
-  }
-
-  getTotalPages(): Observable<any> {
-    const url = `https://pokeapi.co/api/v2/pokemon?limit=${this.nbPokemons}$`;
-
-    return this.callPokeApi(url).pipe(
-      tap((response) => {
+          totalPages: Math.ceil(pokemonList.count / this.nbPokemons),
+        };
         // On met à jour notre sujet
-        this.totalPages.next(Math.ceil(response.count / this.nbPokemons));
+        this.pokemons.next(pokemonList.results);
+        this.paginationInfo.next(newPaginationInfo);
       }),
     );
   }

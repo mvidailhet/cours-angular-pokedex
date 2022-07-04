@@ -1,7 +1,7 @@
 export interface PokemonsApiList {
   count: number;
   next: string;
-  previous: null;
+  previous: string | null;
   results: PokemonApiItem[];
 }
 
@@ -34,4 +34,10 @@ export interface OfficialArtwork {
 export interface PokeApiEndpoint {
   name: string;
   url: string;
+}
+
+export interface PaginationInfo {
+  next: string | null;
+  previous: string | null;
+  totalPages: number;
 }

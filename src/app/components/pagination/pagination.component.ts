@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Memoize } from 'src/app/decorators/memoize';
+import { PaginationInfo } from 'src/app/models/pokemon';
 import { PokeApiService } from 'src/app/services/poke-api.service';
 
 @Component({
@@ -12,44 +13,37 @@ export class PaginationComponent implements OnDestroy {
   @Input() currentPage: number | undefined;
   totalPages!: number;
   pages: number[] = [];
-  urlNextPokemons!: string;
-  urlPreviousPokemons!: string;
+  urlNextPokemons!: string | null;
+  urlPreviousPokemons!: string | null;
   isReady = false;
-  // On crée l'oservables qui seront chargées de surveiller nos sujets
-  urlPokemons$ = this.pokeApiService.urlPokemons.asObservable();
-  totalPages$ = this.pokeApiService.totalPages.asObservable();
 
   constructor(private pokeApiService: PokeApiService, private router: Router) {}
 
   // À la destruction du composant on se désabonne à l'observable
   ngOnDestroy() {
-    this.urlPokemonsSubscription.unsubscribe();
-    this.totalPagesSubscription.unsubscribe();
+    this.paginationInfoSubscription.unsubscribe();
   }
 
   // On s'abonne à l'observable puis on réalise les opérations que l'on désire avec les données reçues
-  urlPokemonsSubscription = this.urlPokemons$.subscribe((urls) => {
-    this.urlNextPokemons = urls.next;
-    this.urlPreviousPokemons = urls.previous;
-  });
-
-  totalPagesSubscription = this.totalPages$.subscribe((totalPages) => {
-    this.totalPages = totalPages;
+  paginationInfoSubscription = this.pokeApiService.paginationInfo$.subscribe((paginationInfo: PaginationInfo) => {
+    this.urlNextPokemons = paginationInfo.next;
+    this.urlPreviousPokemons = paginationInfo.previous;
+    this.totalPages = paginationInfo.totalPages;
     this.createPages();
     this.isReady = (!Number.isNaN(this.totalPages) || this.totalPages !== undefined) && this.pages.length !== 0;
     if (!this.isReady) console.error('Error: An error occured while creating the pagination');
   });
 
   goToPreviousPokemons() {
-    if (!this.urlPreviousPokemons || this.urlPreviousPokemons === null) return;
-    this.router.navigate(['/pokedex/page', this.currentPage! - 1]);
-    this.pokeApiService.callPokeApi(this.urlPreviousPokemons).subscribe();
+    if (!this.currentPage || !this.urlPreviousPokemons) return;
+    const previousIndex = this.currentPage - 2;
+    this.goToPagePokemons(previousIndex);
   }
 
   goToNextPokemons() {
-    if (!this.urlNextPokemons || this.urlNextPokemons === null) return;
-    this.router.navigate(['/pokedex/page', this.currentPage! + 1]);
-    this.pokeApiService.callPokeApi(this.urlNextPokemons).subscribe();
+    if (!this.currentPage || !this.urlNextPokemons) return;
+    const nextIndex = this.currentPage;
+    this.goToPagePokemons(nextIndex);
   }
 
   goToPagePokemons(pageIndex: number) {
