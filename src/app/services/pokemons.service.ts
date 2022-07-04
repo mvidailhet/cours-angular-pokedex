@@ -17,10 +17,11 @@ export class PokemonsService {
     this.loadPokemonsApiListFromStorage();
   }
 
-  fetchPokemon(url: string): Observable<Pokemon> {
-    return this.pokeApiService.callPokeApi(url).pipe(
-      map((data: ApiPokemonResponse) => {
-        const newData = {
+  fetchPokemon(url: string): Observable<Pokemon | null> {
+    return this.pokeApiService.callPokeApi<ApiPokemonResponse>(url).pipe(
+      map((data: ApiPokemonResponse | null) => {
+        if (!data) return null;
+        const newPokemon: Pokemon = {
           name: data.name,
           url,
           details: {
@@ -30,18 +31,18 @@ export class PokemonsService {
           },
         };
 
-        return newData;
+        return newPokemon;
       }),
     );
   }
 
-  fetchPokemonByName(pokemonName: string): Observable<Pokemon> {
+  fetchPokemonByName(pokemonName: string): Observable<Pokemon | null> {
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName}`;
 
     return this.fetchPokemon(url);
   }
 
-  fetchPokemonById(pokemonIndex: number): Observable<Pokemon> {
+  fetchPokemonById(pokemonIndex: number): Observable<Pokemon | null> {
     const url = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}`;
 
     return this.fetchPokemon(url);

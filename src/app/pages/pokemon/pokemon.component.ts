@@ -10,7 +10,7 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
   styleUrls: ['./pokemon.component.scss'],
 })
 export class PokemonComponent implements OnInit, OnDestroy {
-  pokemon: Pokemon | undefined;
+  pokemon: Pokemon | undefined | null;
   currentPokemonName: string | undefined;
   previousPokemonName: string | undefined;
   nextPokemonName: string | undefined;
@@ -40,14 +40,14 @@ export class PokemonComponent implements OnInit, OnDestroy {
 
   fetchCurrentPokemon() {
     if (!this.currentPokemonName) return;
-    this.pokemonService.fetchPokemonByName(this.currentPokemonName).subscribe((pokemon: Pokemon) => {
+    this.pokemonService.fetchPokemonByName(this.currentPokemonName).subscribe((pokemon: Pokemon | null) => {
       this.pokemon = pokemon;
       this.isLoading = false;
     });
   }
 
   fetchPokemonById(pokemonIndex: number) {
-    this.pokemonService.fetchPokemonById(pokemonIndex).subscribe((pokemon: Pokemon) => {
+    this.pokemonService.fetchPokemonById(pokemonIndex).subscribe((pokemon: Pokemon | null) => {
       this.pokemon = pokemon;
       this.isLoading = false;
     });

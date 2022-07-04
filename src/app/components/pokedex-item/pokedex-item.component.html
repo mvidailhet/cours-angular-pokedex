@@ -1,6 +1,6 @@
-<a class="pokemon-link" (click)="goToPokemon()">
+<a class="pokemon-link" (click)="goToPokemon()" *ngIf="pokemon">
   <div class="card bg-light mb-4 text-center">
-    <div class="card-header">#{{ pokemon?.details?.id }} {{ pokemon?.name | titlecase }}</div>
+    <div class="card-header">#{{ pokemon.details?.id }} {{ pokemon.name | titlecase }}</div>
     <div class="card-body">
       <app-loader [isLoading]="isLoading"></app-loader>
       <ng-container *ngIf="!isLoading">
@@ -9,7 +9,7 @@
           <ng-container *ngFor="let type of pokemon.details?.types; let index = index">
             <app-pokemon-type
               [type]="type.type.name"
-              [isLast]="index !== pokemon?.details?.types?.length! - 1"
+              [isLast]="index !== pokemon.details?.types?.length! - 1"
             ></app-pokemon-type>
           </ng-container>
         </div>

@@ -11,7 +11,7 @@ import { PokemonsService } from 'src/app/services/pokemons.service';
 export class PokedexItemComponent implements OnInit {
   @Input()
   public pokemonApiItem!: PokemonApiItem;
-  public pokemon!: Pokemon;
+  public pokemon!: Pokemon | null;
   isLoading = true;
 
   constructor(private pokemonService: PokemonsService, private router: Router) {}
@@ -21,7 +21,7 @@ export class PokedexItemComponent implements OnInit {
   }
 
   fetchPokemon() {
-    this.pokemonService.fetchPokemon(this.pokemonApiItem.url).subscribe((pokemon: Pokemon) => {
+    this.pokemonService.fetchPokemon(this.pokemonApiItem.url).subscribe((pokemon: Pokemon | null) => {
       this.pokemon = pokemon;
       this.isLoading = false;
     });
