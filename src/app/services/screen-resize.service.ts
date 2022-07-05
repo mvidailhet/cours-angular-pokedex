@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { EMPTY, fromEvent, map, of, sampleTime, startWith, switchMap } from 'rxjs';
 
 export enum SCREEN_SIZE_BREAKPOINTS {
@@ -13,7 +13,7 @@ export enum SCREEN_SIZE_BREAKPOINTS {
 @Injectable({
   providedIn: 'root',
 })
-export class ScreenResizeService implements OnDestroy {
+export class ScreenResizeService {
   private _currentScreenWidth: number | undefined;
   private _currentBreakpoint: SCREEN_SIZE_BREAKPOINTS | undefined | null;
 
@@ -32,12 +32,6 @@ export class ScreenResizeService implements OnDestroy {
       if (!newBreakpoint) return EMPTY;
       return of(newBreakpoint);
     }),
-  );
-
-  onResizeSubscription = this.onScreenSizeBreakpointChange$.subscribe(
-    (newBreakpoint: SCREEN_SIZE_BREAKPOINTS | null) => {
-      this._currentBreakpoint = newBreakpoint;
-    },
   );
 
   private detectScreenSizeBreakpointChange(screenWidth: number): SCREEN_SIZE_BREAKPOINTS | null {
@@ -68,9 +62,5 @@ export class ScreenResizeService implements OnDestroy {
       return SCREEN_SIZE_BREAKPOINTS.XL;
     }
     return SCREEN_SIZE_BREAKPOINTS.XXL;
-  }
-
-  ngOnDestroy(): void {
-    this.onResizeSubscription.unsubscribe();
   }
 }

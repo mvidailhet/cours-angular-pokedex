@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { PokemonStat } from 'src/app/models/pokemon';
 import { CurrentPokemonService } from 'src/app/services/current-pokemon.service';
-import { ScreenResizeService } from 'src/app/services/screen-resize.service';
 
 @Component({
   selector: 'app-stats',
@@ -11,7 +10,6 @@ import { ScreenResizeService } from 'src/app/services/screen-resize.service';
 })
 export class StatsComponent implements OnInit {
   stats: PokemonStat[] | undefined;
-  view: [number, number] = [700, 400];
 
   // options
   showYAxis: boolean = true;
@@ -25,7 +23,7 @@ export class StatsComponent implements OnInit {
     selectable: false,
   };
 
-  constructor(private currentPokemonService: CurrentPokemonService, private screenResize: ScreenResizeService) {}
+  constructor(private currentPokemonService: CurrentPokemonService) {}
 
   ngOnInit(): void {
     this.stats = this.currentPokemonService.pokemon?.details.stats;
