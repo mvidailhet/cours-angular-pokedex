@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { PokemonStat } from 'src/app/models/pokemon';
 import { CurrentPokemonService } from 'src/app/services/current-pokemon.service';
+import { ScreenResizeService } from 'src/app/services/screen-resize.service';
 
 @Component({
   selector: 'app-stats',
@@ -24,7 +25,7 @@ export class StatsComponent implements OnInit {
     selectable: false,
   };
 
-  constructor(private currentPokemonService: CurrentPokemonService) {}
+  constructor(private currentPokemonService: CurrentPokemonService, private screenResize: ScreenResizeService) {}
 
   ngOnInit(): void {
     this.stats = this.currentPokemonService.pokemon?.details.stats;
