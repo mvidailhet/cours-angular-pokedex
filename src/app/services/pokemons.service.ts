@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ApiPokemonResponse } from '../models/api-response';
-import { Pokemon } from '../models/pokemon';
+import { ApiPokemonResponse, Stat } from '../models/api-response';
+import { Pokemon, PokemonStat } from '../models/pokemon';
 import { LoggingService } from './logging.service';
 import { PokeApiService } from './poke-api.service';
 
@@ -19,21 +19,30 @@ export class PokemonsService {
 
   fetchPokemon(url: string): Observable<Pokemon | null> {
     return this.pokeApiService.callPokeApi<ApiPokemonResponse>(url).pipe(
-      map((data: ApiPokemonResponse | null) => {
-        if (!data) return null;
+      map((apiPokemon: ApiPokemonResponse | null) => {
+        if (!apiPokemon) return null;
         const newPokemon: Pokemon = {
-          name: data.name,
+          name: apiPokemon.name,
           url,
           details: {
-            id: data.id,
-            image: data.sprites.other!['official-artwork'].front_default,
-            types: data.types,
+            id: apiPokemon.id,
+            image: apiPokemon.sprites.other!['official-artwork'].front_default,
+            types: apiPokemon.types,
+            stats: this.getPokemonStats(apiPokemon),
           },
         };
 
         return newPokemon;
       }),
     );
+  }
+
+  private getPokemonStats(apiPokemon: ApiPokemonResponse) {
+    const stats: PokemonStat[] = apiPokemon.stats.map((apiStat: Stat) => ({
+      name: apiStat.stat.name,
+      value: apiStat.base_stat,
+    }));
+    return stats;
   }
 
   fetchPokemonByName(pokemonName: string): Observable<Pokemon | null> {

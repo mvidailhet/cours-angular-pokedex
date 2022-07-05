@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { PokemonStat } from 'src/app/models/pokemon';
 
 @Component({
   selector: 'app-stats',
@@ -7,7 +9,7 @@ import { Color, ScaleType } from '@swimlane/ngx-charts';
   styleUrls: ['./stats.component.scss'],
 })
 export class StatsComponent {
-  single: any[];
+  @Input() stats: PokemonStat[] | undefined;
   view: [number, number] = [700, 400];
 
   // options
@@ -22,50 +24,9 @@ export class StatsComponent {
     selectable: false,
   };
 
-  constructor() {
-    this.single = [
-      {
-        name: 'Germany',
-        value: 40632,
-        extra: {
-          code: 'de',
-        },
-      },
-      {
-        name: 'United States',
-        value: 50000,
-        extra: {
-          code: 'us',
-        },
-      },
-      {
-        name: 'France',
-        value: 36745,
-        extra: {
-          code: 'fr',
-        },
-      },
-      {
-        name: 'United Kingdom',
-        value: 36240,
-        extra: {
-          code: 'uk',
-        },
-      },
-      {
-        name: 'Spain',
-        value: 33000,
-        extra: {
-          code: 'es',
-        },
-      },
-      {
-        name: 'Italy',
-        value: 35800,
-        extra: {
-          code: 'it',
-        },
-      },
-    ];
+  constructor(private router: Router) {
+    const params = this.router.getCurrentNavigation()?.extras.state;
+    this.stats = params?.stats;
+    console.log(params);
   }
 }

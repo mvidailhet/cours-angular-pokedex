@@ -20,6 +20,7 @@ export interface PokemonDetails {
   id: number;
   image: string;
   types: PokemonType[];
+  stats: PokemonStat[];
 }
 
 export interface PokemonType {
@@ -40,4 +41,9 @@ export interface PaginationInfo {
   next: string | null;
   previous: string | null;
   totalPages: number;
+}
+
+export interface PokemonStat {
+  value: number;
+  name: string;
 }
