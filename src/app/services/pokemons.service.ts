@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ApiPokemonResponse, Stat } from '../models/api-response';
+import { POKEMON_STAT_NAME } from '../models/enums/pokemon-stats';
 import { Pokemon, PokemonStat } from '../models/pokemon';
 import { LoggingService } from './logging.service';
 import { PokeApiService } from './poke-api.service';
@@ -38,10 +39,13 @@ export class PokemonsService {
   }
 
   private getPokemonStats(apiPokemon: ApiPokemonResponse) {
-    const stats: PokemonStat[] = apiPokemon.stats.map((apiStat: Stat) => ({
-      name: apiStat.stat.name,
-      value: apiStat.base_stat,
-    }));
+    const stats: PokemonStat[] = apiPokemon.stats.map((apiStat: Stat) => {
+      const pokemonStatKeyIndex = Object.keys(POKEMON_STAT_NAME).indexOf(apiStat.stat.name);
+      return {
+        name: Object.values(POKEMON_STAT_NAME)[pokemonStatKeyIndex],
+        value: apiStat.base_stat,
+      };
+    });
     return stats;
   }
 

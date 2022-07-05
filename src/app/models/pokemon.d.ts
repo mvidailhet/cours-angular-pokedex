@@ -1,3 +1,5 @@
+import { POKEMON_STAT_NAME } from './enums/pokemon-stats';
+
 export interface PokemonsApiList {
   count: number;
   next: string;
@@ -45,5 +47,5 @@ export interface PaginationInfo {
 
 export interface PokemonStat {
   value: number;
-  name: string;
+  name: POKEMON_STAT_NAME;
 }

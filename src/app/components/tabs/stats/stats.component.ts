@@ -11,7 +11,6 @@ import { CurrentPokemonService } from 'src/app/services/current-pokemon.service'
 export class StatsComponent implements OnInit {
   stats: PokemonStat[] | undefined;
 
-  // options
   showYAxis: boolean = true;
   gradient: boolean = false;
   yAxisLabel: string = 'Country';
