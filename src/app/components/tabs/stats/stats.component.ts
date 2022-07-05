@@ -1,15 +1,15 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { PokemonStat } from 'src/app/models/pokemon';
+import { CurrentPokemonService } from 'src/app/services/current-pokemon.service';
 
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss'],
 })
-export class StatsComponent {
-  @Input() stats: PokemonStat[] | undefined;
+export class StatsComponent implements OnInit {
+  stats: PokemonStat[] | undefined;
   view: [number, number] = [700, 400];
 
   // options
@@ -24,9 +24,9 @@ export class StatsComponent {
     selectable: false,
   };
 
-  constructor(private router: Router) {
-    const params = this.router.getCurrentNavigation()?.extras.state;
-    this.stats = params?.stats;
-    console.log(params);
+  constructor(private currentPokemonService: CurrentPokemonService) {}
+
+  ngOnInit(): void {
+    this.stats = this.currentPokemonService.pokemon?.details.stats;
   }
 }

@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="container" *ngIf="pokemon">
-  <app-pokemon-details [pokemon]="pokemon"></app-pokemon-details>
+  <app-pokemon-details></app-pokemon-details>
   <app-pokemon-navigation
     [pokemonName]="pokemon.name"
     (goToPreviousPokemonClick)="goToPreviousPokemon()"

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Pokemon } from 'src/app/models/pokemon';
+import { CurrentPokemonService } from 'src/app/services/current-pokemon.service';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
@@ -17,7 +18,11 @@ export class PokemonComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription | undefined;
   isLoading = true;
 
-  constructor(private activatedRoute: ActivatedRoute, private pokemonService: PokemonsService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private pokemonService: PokemonsService,
+    private currentPokemonService: CurrentPokemonService,
+  ) {}
 
   ngOnInit(): void {
     this.paramsSubscription = this.activatedRoute.params.subscribe(this.handleRouteParams);
@@ -41,7 +46,9 @@ export class PokemonComponent implements OnInit, OnDestroy {
   fetchCurrentPokemon() {
     if (!this.currentPokemonName) return;
     this.pokemonService.fetchPokemonByName(this.currentPokemonName).subscribe((pokemon: Pokemon | null) => {
+      if (!pokemon) return;
       this.pokemon = pokemon;
+      this.currentPokemonService.pokemon = pokemon;
       this.isLoading = false;
     });
   }
