@@ -1,0 +1,18 @@
+<div class="card pe-5">
+  <div class="card-body row">
+    <div class="col">
+      <app-pokemon-image [isLoading]="isLoading" [pokemon]="pokemon" [isSmall]="true"></app-pokemon-image>
+      <span class="fw-bold">{{ pokemon.name | titlecase }}</span>
+    </div>
+    <app-pokemon-types
+      class="pokemon-types col d-flex justify-content-center align-items-center"
+      [types]="pokemon.details?.types"
+    ></app-pokemon-types>
+    <!-- <div class="col">
+      {{ pokemon.createdAt | date: 'fullDate':'':'fr-FR' | titlecase }}
+    </div> -->
+  </div>
+  <div class="close-button-container p-3">
+    <button (click)="onRemoveClick()" type="button" class="btn-close" aria-label="Close"></button>
+  </div>
+</div>

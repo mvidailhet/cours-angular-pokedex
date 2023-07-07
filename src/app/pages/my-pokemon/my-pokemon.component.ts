@@ -1,16 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { lastValueFrom, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Pokemon } from 'src/app/models/pokemon';
-import { CurrentPokemonService } from 'src/app/services/current-pokemon.service';
 import { PokemonsService } from 'src/app/services/pokemons.service';
 
 @Component({
   selector: 'app-pokemon',
-  templateUrl: './pokemon.component.html',
-  styleUrls: ['./pokemon.component.scss'],
+  templateUrl: './my-pokemon.component.html',
+  styleUrls: ['./my-pokemon.component.scss'],
 })
-export class PokemonComponent implements OnInit, OnDestroy {
+export class MyPokemonComponent implements OnInit, OnDestroy {
   pokemon: Pokemon | undefined | null;
   currentPokemonName: string | undefined;
   previousPokemonName: string | undefined;
@@ -21,7 +20,6 @@ export class PokemonComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private pokemonService: PokemonsService,
-    private currentPokemonService: CurrentPokemonService,
     private router: Router,
   ) {}
 
@@ -39,46 +37,34 @@ export class PokemonComponent implements OnInit, OnDestroy {
   handleRouteParams = (params: Params) => {
     this.currentPokemonName = params.name;
     if (!this.currentPokemonName) return;
+    this.previousPokemonName = this.pokemonService.getPreviousMyPokemonName(this.currentPokemonName);
+    this.nextPokemonName = this.pokemonService.getNextMyPokemonName(this.currentPokemonName);
     this.fetchCurrentPokemon();
+  };
+
+  handleQueryParams = (queryParams: Params) => {
+    console.log('query parameters :', queryParams);
+  };
+
+  handleFragment = (fragment: string | null) => {
+    console.log(`fragment : ${fragment}`);
   };
 
   fetchCurrentPokemon() {
     if (!this.currentPokemonName) return;
     this.pokemonService.fetchPokemonByName(this.currentPokemonName).subscribe((pokemon: Pokemon | null) => {
-      if (!pokemon) return;
       this.pokemon = pokemon;
-      this.currentPokemonService.pokemon = pokemon;
       this.isLoading = false;
     });
   }
 
-  async getPokemonNameById(pokemonId: number) {
-    const pokemon = await lastValueFrom(this.pokemonService.fetchPokemonById(pokemonId));
-    return pokemon?.name;
+  goToPreviousPokemon() {
+    if (!this.previousPokemonName) return;
+    this.router.navigate(['/my-pokemon', this.previousPokemonName]);
   }
 
-  fetchPokemonById(pokemonIndex: number) {
-    this.pokemonService.fetchPokemonById(pokemonIndex).subscribe((pokemon: Pokemon | null) => {
-      if (!pokemon) return;
-      this.currentPokemonService.pokemon = pokemon;
-      this.pokemon = this.currentPokemonService.pokemon;
-      this.isLoading = false;
-    });
-  }
-
-  async goToPreviousPokemon() {
-    const pokemonIndex = this.pokemon?.details.id;
-    if (pokemonIndex === 1 || !pokemonIndex) return;
-
-    const previousPokemonName = await this.getPokemonNameById(pokemonIndex - 1);
-    this.router.navigate(['/pokemon', previousPokemonName]);
-  }
-
-  async goToNextPokemon() {
-    const pokemonIndex = this.pokemon?.details.id;
-    if (!pokemonIndex) return;
-
-    const nextPokemonName = await this.getPokemonNameById(pokemonIndex + 1);
-    this.router.navigate(['/pokemon', nextPokemonName]);
+  goToNextPokemon() {
+    if (!this.nextPokemonName) return;
+    this.router.navigate(['/my-pokemon', this.nextPokemonName]);
   }
 }

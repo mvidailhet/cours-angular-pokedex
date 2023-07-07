@@ -1,0 +1,12 @@
+<div class="container-lg">
+  <h2 class="my-5">Pokédex</h2>
+  <div class="container">
+    <app-loader [isLoading]="isLoading" [isBigLoader]="true"></app-loader>
+    <ng-container *ngIf="!isLoading">
+      <div class="row">
+        <app-pokedex-item class="col-12 col-md-4" *ngFor="let pokemon of pokemonsApiList" [pokemonApiItem]="pokemon">
+        </app-pokedex-item>
+      </div>
+    </ng-container>
+  </div>
+</div>

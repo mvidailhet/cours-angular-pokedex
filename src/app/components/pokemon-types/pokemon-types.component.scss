@@ -1,0 +1,23 @@
+@import '../../../styles/abstract/variables';
+
+@each $name, $hex in $pokemon-type-colors {
+  .pokemon-background-type-#{$name} {
+    background-color: $hex;
+
+    @if lightness($hex) >= 50 {
+      color: #000;
+    } @else {
+      color: #fff;
+    }
+  }
+}
+
+:host {
+  display: block;
+}
+
+.pokemon-type {
+  &:last-child {
+    margin-right: 0 !important;
+  }
+}

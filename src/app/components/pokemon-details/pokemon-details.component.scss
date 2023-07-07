@@ -1,0 +1,17 @@
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~bootstrap/scss/bootstrap-grid';
+
+.pokemon-name,
+.image-container {
+  text-align: center;
+}
+
+@include media-breakpoint-up(sm) {
+  .image-container {
+    text-align: right;
+  }
+
+  .pokemon-name {
+    text-align: left;
+  }
+}

@@ -1,0 +1,9 @@
+.page-link {
+  cursor: pointer;
+}
+
+.page-item.active {
+  .page-link {
+    cursor: inherit;
+  }
+}

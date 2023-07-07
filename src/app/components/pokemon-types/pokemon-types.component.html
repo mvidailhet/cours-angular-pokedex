@@ -1,0 +1,7 @@
+<span
+  *ngFor="let type of types"
+  class="pokemon-type badge badge py-2 px-3 badge-secondary pokemon-background-type-{{
+    type.type.name | uppercase
+  }} me-3"
+  >{{ type.type.name | titlecase }}</span
+>

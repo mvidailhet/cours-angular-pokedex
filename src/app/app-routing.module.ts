@@ -5,12 +5,14 @@ import { PreventPokemonFormLeaveGuard } from './guards/prevent-pokemon-form-leav
 import { CreateUserModelDrivenComponent } from './pages/create-user-model-driven/create-user-model-driven.component';
 import { CreateUserTemplateDrivenComponent } from './pages/create-user-template-driven/create-user-template-driven.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ErrorComponent } from './pages/pokemon/error/error.component';
-import { PokemonComponent } from './pages/pokemon/pokemon.component';
-import { EvolutionsComponent } from './pages/pokemon/tabs/evolutions/evolutions.component';
-import { GeneralComponent } from './pages/pokemon/tabs/general/general.component';
-import { StatsComponent } from './pages/pokemon/tabs/stats/stats.component';
+import { PokedexComponent } from './pages/pokedex/pokedex.component';
+import { ErrorComponent } from './components/error/error.component';
+import { MyPokemonComponent } from './pages/my-pokemon/my-pokemon.component';
+import { EvolutionsComponent } from './components/tabs/evolutions/evolutions.component';
+import { GeneralComponent } from './components/tabs/general/general.component';
+import { StatsComponent } from './components/tabs/stats/stats.component';
 import { SamePasswordValidatorComponent } from './pages/same-password-validator/same-password-validator.component';
+import { PokemonComponent } from './pages/pokemon/pokemon.component';
 
 const routes: Routes = [
   {
@@ -31,9 +33,41 @@ const routes: Routes = [
     component: CreateUserTemplateDrivenComponent,
   },
   {
-    canActivate: [AuthGuard],
+    path: 'pokedex/page/:page',
+    component: PokedexComponent,
+  },
+  {
+    path: 'pokedex',
+    redirectTo: 'pokedex/page/1',
+    pathMatch: 'full',
+  },
+  {
     path: 'pokemon/:name',
     component: PokemonComponent,
+    children: [
+      {
+        path: 'general',
+        component: GeneralComponent,
+      },
+      {
+        path: 'stats',
+        component: StatsComponent,
+      },
+      {
+        path: 'evolutions',
+        component: EvolutionsComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'general',
+        pathMatch: 'full',
+      },
+    ],
+  },
+  {
+    canActivate: [AuthGuard],
+    path: 'my-pokemon/:name',
+    component: MyPokemonComponent,
     children: [
       {
         path: 'general',

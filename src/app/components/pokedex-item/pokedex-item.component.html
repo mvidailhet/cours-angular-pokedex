@@ -1,0 +1,12 @@
+<a class="pokemon-link" (click)="goToPokemon()" *ngIf="pokemon">
+  <div class="card bg-light mb-4 text-center">
+    <div class="card-header">#{{ pokemon.details?.id }} {{ pokemon.name | titlecase }}</div>
+    <div class="card-body">
+      <app-loader [isLoading]="isLoading"></app-loader>
+      <ng-container *ngIf="!isLoading">
+        <app-pokemon-image [isLoading]="isLoading" [pokemon]="pokemon"></app-pokemon-image>
+        <app-pokemon-types class="pokemon-types mb-4" [types]="pokemon.details?.types"></app-pokemon-types>
+      </ng-container>
+    </div>
+  </div>
+</a>
